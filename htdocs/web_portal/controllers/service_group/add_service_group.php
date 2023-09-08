@@ -22,6 +22,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
   /*====================================================== */
+use Exception;
+
 require_once __DIR__ . '/../../../../lib/Gocdb_Services/Factory.php';
 require_once __DIR__ . '/../../components/Get_User_Principle.php';
 require_once __DIR__ . '/../utils.php';
@@ -74,9 +76,23 @@ function draw($user) {
             throw new \Exception("Unregistered users can't create service groups.");
         }
 
+        $hasAdminCredentials = $user->isAdmin();
+        $roleService = \Factory::getRoleService();
+        $userRoles = $roleService->getUserRoles($user);
+
+        $isUserValid = $hasAdminCredentials ? true : !empty($userRoles);
+
+        if (!$isUserValid) {
+            throw new Exception(
+                "You do not have permission to add a new "
+                . "Service Group. To add a new Service Group, you require "
+                . "atleast one role assigned over an entity in GOCDB."
+            );
+        }
+
         // can user assign reserved scopes ?
         $disableReservedScopes = true;
-        if ($user->isAdmin()) {
+        if ($hasAdminCredentials) {
             $disableReservedScopes = false;
         }
 
