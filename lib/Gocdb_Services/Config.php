@@ -567,4 +567,40 @@ class Config
 
         return $emailTo;
     }
+
+    public function getIdentityProvidersInfo(): array
+    {
+        $localInfo = $this->GetLocalInfoXML();
+        $identityProviders = [];
+
+        if (!empty($localInfo->identity_providers->provider)) {
+            foreach ($localInfo->identity_providers->provider as $providerDetails) {
+                /** idp */
+                $idp = (string) $providerDetails->idp;
+
+                /** name */
+                $name = (string) $providerDetails->name;
+
+                /** required_groups */
+                $requiredGroups = [];
+                if ($providerDetails->required_groups->group) {
+                    foreach($providerDetails->required_groups->group as $group) {
+                        $requiredGroups[] = (string) $group;
+                    }
+                }
+
+                /** help_url */
+                $helpURL = $providerDetails->help_url ?? null;
+
+                $identityProviders[] = [
+                    'idp' => $idp,
+                    'name' => $name,
+                    'requiredGroups' => $requiredGroups,
+                    'helpURL', $helpURL
+                ];
+            }
+        }
+
+        return $identityProviders;
+    }
 }
