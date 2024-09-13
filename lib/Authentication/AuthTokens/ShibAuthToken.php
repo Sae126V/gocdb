@@ -85,6 +85,7 @@ class ShibAuthToken implements IAuthentication {
         // specify location of the Shib Logout handler
         \Factory::$properties['LOGOUTURL'] = 'https://'.$hostname.'/Shibboleth.sso/Logout';
         $idp = isset($_SERVER['Shib-Identity-Provider']) ? $_SERVER['Shib-Identity-Provider'] : '';
+
         if ($idp == 'https://unity.eudat-aai.fz-juelich.de:8443/saml-idp/metadata'
                 &&  $_SERVER['distinguishedName'] != null){
             $this->principal = $_SERVER['distinguishedName'];
@@ -103,38 +104,42 @@ class ShibAuthToken implements IAuthentication {
         foreach ($identityProviders as $provider) {
             if ($provider['idp'] === $idp) {
                 $name = $provider['name'];
-                $helpUrl = $provider['help_url'] ?? '#';
+                $helpUrl = $provider['help_url'];
 
                 if (empty($_SERVER['voPersonID'])) {
                     die(
-                        "Did not receive required attributes from the IDP $name to "
-                        . "complete authentication. Please contact gocdb-admins."
+                        "Did not receive required attributes from the "
+                        . "IDP $name to complete authentication. "
+                        . "Please contact gocdb-admins."
                     );
                 }
 
                 if (empty($_SERVER['entitlement'])) {
                     die(
-                        "Did not receive the required entitlement attribute from "
-                        . "the IDP $name. Please contact gocdb-admins."
+                        "Did not receive the required entitlement "
+                        . "attribute from the IDP $name. "
+                        . "Please contact gocdb-admins."
                     );
                 }
 
                 if (!empty($provider['required_groups'])) {
-                    $entitlementValues = explode(
-                        ';', $_SERVER['entitlement']
-                    );
+                    $entitlementValues = explode(';', $_SERVER['entitlement']);
 
-                    if (!array_intersect(
-                        $entitlementValues, $provider['required_groups']
-                    )) {
+                    if (
+                        !array_intersect(
+                            $entitlementValues,
+                            $provider['required_groups']
+                        )
+                    ) {
                         $HTML = "<ul>"
-                            . "<li>Login requires the entitlement "
+                            . "<li>Login requires a GOCDB entitlement value "
                             . "which was not provided for the IDP $name.</li>"
                             . "<li>Please see here for more information: "
-                            . "<a href='$helpUrl' target='_blank'>$helpUrl</a>.</li>"
-                            . "<li>Logout or restart your "
-                            . "browser and attempt to login again using an IDP that "
-                            . "provides a GOCDB entitlement.</li>"
+                            . "<a href='$helpUrl' target='_blank'>"
+                            . "$helpUrl</a>.</li>"
+                            . "<li>Logout or restart your browser"
+                            . "and attempt to login again using an IDP "
+                            . "that provides a GOCDB entitlement.</li>"
                             . "</ul>";
                         $HTML .= "<div style='text-align: center;'>";
                         $HTML .= "<a href=\""
@@ -147,7 +152,9 @@ class ShibAuthToken implements IAuthentication {
                 }
 
                 $this->principal = $_SERVER['voPersonID'];
-                $this->userDetails = ['AuthenticationRealm' => [$provider['idp']]];
+                $this->userDetails = [
+                    'AuthenticationRealm' => $provider['authenticationRealms']
+                ];
 
                 return;
             }

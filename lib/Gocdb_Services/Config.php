@@ -574,27 +574,46 @@ class Config
         $identityProviders = [];
 
         if (!empty($localInfo->identity_providers->provider)) {
-            foreach ($localInfo->identity_providers->provider as $providerDetails) {
+            foreach (
+                $localInfo
+                    ->identity_providers
+                    ->provider as $providerDetails
+            ) {
                 /** idp */
                 $idp = (string) $providerDetails->idp;
 
                 /** name */
                 $name = (string) $providerDetails->name;
 
+                /** authentication_realms */
+                $authenticationRealms = [];
+                if ($providerDetails->authentication_realms) {
+                    foreach (
+                        $providerDetails
+                            ->authentication_realms
+                            ->shib_realm_name as $shibRealmName
+                    ) {
+                        $authenticationRealms[] = (string) $shibRealmName;
+                    }
+                }
+
                 /** required_groups */
                 $requiredGroups = [];
-                if ($providerDetails->required_groups->group) {
-                    foreach($providerDetails->required_groups->group as $group) {
+                if ($providerDetails->required_groups) {
+                    foreach (
+                        $providerDetails->required_groups->group as $group
+                    ) {
                         $requiredGroups[] = (string) $group;
                     }
                 }
 
                 /** help_url */
-                $helpURL = $providerDetails->help_url ?? null;
+                $helpURL = (string) $providerDetails->help_url;
 
                 $identityProviders[] = [
                     'idp' => $idp,
                     'name' => $name,
+                    'authenticationRealms' => $authenticationRealms,
                     'requiredGroups' => $requiredGroups,
                     'helpURL', $helpURL
                 ];

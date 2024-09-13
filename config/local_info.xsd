@@ -125,11 +125,18 @@
               <xs:element name="identity_providers" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="provider" minOccurs="1">
+                    <xs:element name="provider" minOccurs="1" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="idp" type="xs:string"/>
-                          <xs:element name="name" type="xs:string"/>
+                          <xs:element name="idp" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="authentication_realms" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="shib_realm_name" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
                           <xs:element name="required_groups" minOccurs="0">
                             <xs:complexType>
                               <xs:sequence>
@@ -137,7 +144,7 @@
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="help_url" type="xs:string" minOccurs="0"/>
+                          <xs:element name="help_url" type="xs:string" minOccurs="1" maxOccurs="1"/>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
