@@ -408,12 +408,14 @@
                             <?php } ?>
                             </td>
                             <td class="site_table">
-                                <?php if (!$params['portalIsReadOnly'] && $role->getDecoratorObject() != null) :?>
+                                <?php
+                                $decorator = $role->getDecoratorObject();
+                                if (!$params['portalIsReadOnly'] && $decorator != null) :?>
                                     <form action="index.php?Page_Type=Revoke_Role" method="post">
                                         <input type="hidden" name="id" value="<?php echo $role->getId()?>" />
-                                        <input id="revokeButton" type="submit" value="Revoke"
+                                        <input id="revokeButton" type="submit" value="Revoke" <?php echo $decorator['revokeButton']; ?>
                                             class="btn btn-sm btn-danger" onclick="return confirmSubmit()"
-                                            title="Your roles allowing revoke: <?php xecho($decorator); ?>" >
+                                            title="Your roles allowing revoke: <?php xecho($decorator['revokeMessage']); ?>" >
                                     </form>
                                 <?php endif;?>
                             </td>
