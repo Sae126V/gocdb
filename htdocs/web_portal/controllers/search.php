@@ -43,10 +43,11 @@ function search() {
 
 
     $params['searchTerm'] = $searchTerm;
-    $params['siteResults'] = null;
-    $params['serviceResults'] = null;
-    $params['userResults'] = null;
-    $params['ngiResults'] = null;
+    $params['siteResults'] = [];
+    $params['serviceResults'] = [];
+    $params['userResults'] = [];
+    $params['ngiResults'] = [];
+    $params['siteIdentifiers'] = [];
 
     if($params['searchTerm'] == "") {
         show_view('search_results.php', $params, "Searching for {$params['searchTerm']}");

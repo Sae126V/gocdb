@@ -106,7 +106,7 @@ class Search {
      */
     public function getSiteIdentifiers($user, $searchTerm)
     {
-        if ($user->isAdmin()) {
+        if ($user !== null && $user->isAdmin()) {
             $dql = "SELECT ui FROM APIAuthentication ui "
                 . " WHERE UPPER(ui.identifier) "
                 . " LIKE UPPER(concat(concat('%', :searchTerm), '%'))";
@@ -117,5 +117,7 @@ class Search {
 
             return $siteIdentifiers;
         }
+
+        return [];
     }
 }
