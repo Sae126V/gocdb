@@ -117,5 +117,7 @@ class Search {
 
             return $siteIdentifiers;
         }
+
+        return [];
     }
 }
