@@ -107,7 +107,7 @@ class ShibAuthToken implements IAuthentication {
             if($_SERVER['assurance'] != 'https://aai.egi.eu/LoA#Substantial'){
                  $HTML = '<ul><li>You authenticated to the EGI Identity Provider using a method that provides an inadequate Level of Assurance for GOCDB (weak user verification).</li><li>Login is required with an assurance level of [Substantial].</li><li>To gain access, you will need to login to the Proxy IdP using a scheme that provides [LoA#Substantial].</li><li>Please logout or restart your browser and attempt to login again.</li></ul>';
                  $HTML .= "<div style='text-align: center;'>";
-                 $HTML .= '<a href="'.htmlspecialchars(\Factory::$properties['LOGOUTURL']).'"><b><font colour="red">Logout</font></b></a>';
+                 $HTML .= '<a href="'.htmlspecialchars(\Factory::$properties['LOGOUTURL'], ENT_COMPAT | ENT_HTML401).'"><b><font colour="red">Logout</font></b></a>';
                  $HTML .= "</div>";
                  echo ($HTML);
                  die();
@@ -124,7 +124,7 @@ class ShibAuthToken implements IAuthentication {
                 //die('Did not recieve the required entitlement attribute from the EGI Proxy IdP, please contact gocdb-admins');
                 $HTML = $this->getEntitlementErrorMessage();
                 $HTML .= "<div style='text-align: center;'>";
-                $HTML .= '<a href="'.htmlspecialchars(\Factory::$properties['LOGOUTURL']).'"><b><font colour="red">Logout</font></b></a>';
+                $HTML .= '<a href="'.htmlspecialchars(\Factory::$properties['LOGOUTURL'], ENT_COMPAT | ENT_HTML401).'"><b><font colour="red">Logout</font></b></a>';
                 $HTML .= "</div>";
                 echo ($HTML);
                 die();
@@ -134,7 +134,7 @@ class ShibAuthToken implements IAuthentication {
             if( !in_array('urn:mace:egi.eu:res:gocdb#aai.egi.eu', $entitlementValuesArray) ){
                  $HTML = $this->getEntitlementErrorMessage();
                  $HTML .= "<div style='text-align: center;'>";
-                 $HTML .= '<a href="'.htmlspecialchars(\Factory::$properties['LOGOUTURL']).'"><b><font colour="red">Logout</font></b></a>';
+                 $HTML .= '<a href="'.htmlspecialchars(\Factory::$properties['LOGOUTURL'], ENT_COMPAT | ENT_HTML401).'"><b><font colour="red">Logout</font></b></a>';
                  $HTML .= "</div>";
                  echo ($HTML);
                  die();
@@ -155,7 +155,7 @@ class ShibAuthToken implements IAuthentication {
             if( !in_array('urn:mace:egi.eu:res:gocdb#aai.egi.eu', $entitlementValuesArray) ){
                  $HTML = '<ul><li>You authenticated to the EGI Demo Identity Provider using a method that does not provide a GOCDB entitlement.</li><li>Login is required with a gocdb entitlement.</li><li>To gain access, you will need to login to the Proxy IdP using a scheme that provides a gocdb entitlement.</li><li>Please logout or restart your browser and attempt to login again.</li></ul>';
                  $HTML .= "<div style='text-align: center;'>";
-                 $HTML .= '<a href="'.htmlspecialchars(\Factory::$properties['LOGOUTURL']).'"><b><font colour="red">Logout</font></b></a>';
+                 $HTML .= '<a href="'.htmlspecialchars(\Factory::$properties['LOGOUTURL'], ENT_COMPAT | ENT_HTML401).'"><b><font colour="red">Logout</font></b></a>';
                  $HTML .= "</div>";
                  echo ($HTML);
                  die();

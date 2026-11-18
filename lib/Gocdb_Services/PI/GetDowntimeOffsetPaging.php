@@ -596,7 +596,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
             $helpers->addIfNotEmpty($xmlDowntime, 'END_DATE', $downtime->getEndDate()->getTimestamp());
             $helpers->addIfNotEmpty($xmlDowntime, 'FORMATED_START_DATE', $downtime->getStartDate()->format(DATE_FORMAT));
             $helpers->addIfNotEmpty($xmlDowntime, 'FORMATED_END_DATE', $downtime->getEndDate()->format(DATE_FORMAT));
-            $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtime->getId());
+            $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtime->getId(), ENT_COMPAT | ENT_HTML401);
             $helpers->addIfNotEmpty($xmlDowntime, 'GOCDB_PORTAL_URL', $portalUrl);
 
             $xmlImpactedSE = $xmlDowntime->addChild('SERVICES');
@@ -618,7 +618,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                             $xmlEndpoint->addChild('ID', $endpoint->getId());
                             $xmlEndpoint->addChild('NAME', $endpoint->getName());
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl()));
+                            $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
                             $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
                             if ($endpoint->getMonitored()) {
                                 $mon = "Y";
@@ -672,7 +672,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                 // maybe rename ENDPOINT to SE_ENDPOINT (for rendering mep)
                 $helpers->addIfNotEmpty($xmlDowntime, 'ENDPOINT', $service->getHostName() . $service->getServiceType()->getName());
                 $helpers->addIfNotEmpty($xmlDowntime, 'HOSTED_BY', $service->getParentSite()->getShortName());
-                $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtime->getId());
+                $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtime->getId(), ENT_COMPAT | ENT_HTML401);
                 $helpers->addIfNotEmpty($xmlDowntime, 'GOCDB_PORTAL_URL', $portalUrl);
 
                 if ($this->renderMultipleEndpoints) {
@@ -685,7 +685,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                             $xmlEndpoint->addChild('ID', $endpoint->getId());
                             $xmlEndpoint->addChild('NAME', $endpoint->getName());
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl()));
+                            $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
                             $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
                             if ($endpoint->getMonitored()) {
                                 $mon = "Y";
@@ -738,7 +738,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
             $helpers->addIfNotEmpty($xmlDowntime, 'END_DATE', strtotime($downtimeArray ['endDate']->format('Y-m-d H:i:s')));
             $helpers->addIfNotEmpty($xmlDowntime, 'FORMATED_START_DATE', $downtimeArray ['startDate']->format('Y-m-d H:i'));
             $helpers->addIfNotEmpty($xmlDowntime, 'FORMATED_END_DATE', $downtimeArray ['endDate']->format('Y-m-d H:i'));
-            $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtimeArray ['id']);
+            $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtimeArray ['id'], ENT_COMPAT | ENT_HTML401);
             $helpers->addIfNotEmpty($xmlDowntime, 'GOCDB_PORTAL_URL', $portalUrl);
 
             //Iterate through the downtime's affected services
@@ -746,7 +746,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
             foreach ($downtimeArray ['services'] as $service) {
                 $xmlService = $xmlImpactedSE->addChild('SERVICE');
                 $helpers->addIfNotEmpty($xmlService, 'PRIMARY_KEY', $service['id'] . 'G0');
-                $helpers->addIfNotEmpty($xmlService, 'HOSTNAME', htmlspecialchars($service ['hostName']));
+                $helpers->addIfNotEmpty($xmlService, 'HOSTNAME', htmlspecialchars($service ['hostName'], ENT_COMPAT | ENT_HTML401));
                 $helpers->addIfNotEmpty($xmlService, 'SERVICE_TYPE', $service ['serviceType'] ['name']);
                 // maybe rename ENDPOINT to SE_ENDPOINT (for rendering mep)
                 $helpers->addIfNotEmpty($xmlService, 'ENDPOINT', $service['hostName'] . $service['serviceType'] ['name']);
@@ -770,7 +770,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                             $xmlEndpoint->addChild('ID', $dtEndpoint['id']);
                             $xmlEndpoint->addChild('NAME', $dtEndpoint['name']);
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($dtEndpoint['url']));
+                            $xmlEndpoint->addChild('URL', htmlspecialchars($dtEndpoint['url'], ENT_COMPAT | ENT_HTML401));
                             $xmlEndpoint->addChild('INTERFACENAME', $dtEndpoint['interfaceName']);
                             if ($dtEndpoint['monitored']) {
                                 $mon = "Y";
@@ -811,12 +811,12 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                 // <DOWNTIME> element and attributes end
                 // Nested elements
                 $helpers->addIfNotEmpty($xmlDowntime, 'PRIMARY_KEY', $downtimeArray ['primaryKey']);
-                $helpers->addIfNotEmpty($xmlDowntime, 'HOSTNAME', htmlspecialchars($service ['hostName']));
+                $helpers->addIfNotEmpty($xmlDowntime, 'HOSTNAME', htmlspecialchars($service ['hostName'], ENT_COMPAT | ENT_HTML401));
                 $helpers->addIfNotEmpty($xmlDowntime, 'SERVICE_TYPE', $service ['serviceType']['name']);
                 // maybe rename ENDPOINT to SE_ENDPOINT (for rendering mep)
                 $helpers->addIfNotEmpty($xmlDowntime, 'ENDPOINT', $service ['hostName'] . $service ['serviceType']['name']);
                 $helpers->addIfNotEmpty($xmlDowntime, 'HOSTED_BY', $service ['parentSite'] ['shortName']);
-                $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtimeArray ['id']);
+                $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtimeArray ['id'], ENT_COMPAT | ENT_HTML401);
                 $helpers->addIfNotEmpty($xmlDowntime, 'GOCDB_PORTAL_URL', $portalUrl);
 
                 // debugging
@@ -844,7 +844,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                             $xmlEndpoint->addChild('ID', $dtEndpoint['id']);
                             $xmlEndpoint->addChild('NAME', $dtEndpoint['name']);
                             // Extensions ?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($dtEndpoint['url']));
+                            $xmlEndpoint->addChild('URL', htmlspecialchars($dtEndpoint['url'], ENT_COMPAT | ENT_HTML401));
                             $xmlEndpoint->addChild('INTERFACENAME', $dtEndpoint['interfaceName']);
                             if ($dtEndpoint['monitored']) {
                                 $mon = "Y";

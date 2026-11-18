@@ -39,7 +39,7 @@ date_default_timezone_set("UTC");
  */
 function xssafe($data,$encoding='UTF-8') {
    //return htmlspecialchars($data,ENT_QUOTES | ENT_HTML401,$encoding);
-    return htmlspecialchars((string) $data);
+    return htmlspecialchars((string) $data, ENT_COMPAT | ENT_HTML401);
 }
 /**
  * Safely escape then echo the given string (xss mitigation function).
@@ -106,10 +106,10 @@ function Get_Page_Type() {
 }
 
 function testForHtmlSpecialChars($value, $key){
-    if(is_string($key) && strcmp($key, htmlspecialchars($key)) !== 0) {
+    if(is_string($key) && strcmp($key, htmlspecialchars($key, ENT_COMPAT | ENT_HTML401)) !== 0) {
         throw new \Exception("Invalid chars detected in URL parameter keys");
     }
-    if(is_string($value) && strcmp($value, htmlspecialchars($value)) !== 0) {
+    if(is_string($value) && strcmp($value, htmlspecialchars($value, ENT_COMPAT | ENT_HTML401)) !== 0) {
         throw new \Exception("Invalid chars detected in URL parameter values");
     }
 }

@@ -56,7 +56,7 @@ date_default_timezone_set("UTC");
 function xssafe($data, $encoding = 'UTF-8')
 {
     //return htmlspecialchars($data,ENT_QUOTES | ENT_HTML401,$encoding);
-    return htmlspecialchars((string) $data);
+    return htmlspecialchars((string) $data, ENT_COMPAT | ENT_HTML401);
 }
 
 /**
