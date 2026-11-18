@@ -109,8 +109,10 @@ class Helpers {
         $testParamValues = array_values($testParams);
         foreach ($testParamValues as $value) {
             // whole string anchored left and right, allow any char except "'`
-            if (!preg_match("/^[^\"'`]*$/", $value)) {
-            echo '<error>Unsuported chracter in value: ' . $value . '</error>';
+            // An array value is rejected as well. That is what PHP 7.4 did too (preg_match() returned
+            // false for an array); on PHP 8 preg_match() would throw a TypeError instead.
+            if (is_array($value) || !preg_match("/^[^\"'`]*$/", (string) $value)) {
+            echo '<error>Unsuported chracter in value: ' . (is_array($value) ? 'Array' : $value) . '</error>';
             die();
             }
         }
