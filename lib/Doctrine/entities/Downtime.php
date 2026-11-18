@@ -376,7 +376,7 @@ class Downtime {
      * @return boolean
      */
     public function isOngoing() {
-        $nowUtc = new \DateTime(null, new \DateTimeZone('UTC'));
+        $nowUtc = new \DateTime('now', new \DateTimeZone('UTC'));
         $endDateUtc = $this->getEndDate()->setTimezone(new \DateTimeZone('UTC'));
         $startDateUtc = $this->getStartDate()->setTimezone(new \DateTimeZone('UTC'));
         if ($startDateUtc < $nowUtc && $endDateUtc > $nowUtc) {
@@ -391,7 +391,7 @@ class Downtime {
      * @return boolean
      */
     public function hasStarted() {
-        $nowUtc = new \DateTime(null, new \DateTimeZone('UTC'));
+        $nowUtc = new \DateTime('now', new \DateTimeZone('UTC'));
         $startDateUtc = $this->getStartDate()->setTimezone(new \DateTimeZone('UTC'));
         if ($startDateUtc < $nowUtc) {
             return true;

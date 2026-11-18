@@ -101,29 +101,29 @@ class DateTimeConvertTests extends \PHPUnit\Framework\TestCase
         $targetTz5 = new \DateTimeZone("Europe/London");
 
         // now in specified Tz
-        $nowTz = new \DateTime(null, $targetTz1);
+        $nowTz = new \DateTime('now', $targetTz1);
         print_r($nowTz);
         print_r("Offset from UTC in secs: ".$nowTz->getOffset()."\n\n"); //Returns the timezone offset in seconds from UTC on success or FALSE on failure.
 
-        $nowTz = new \DateTime(null, $targetTz2);
+        $nowTz = new \DateTime('now', $targetTz2);
         print_r($nowTz);
         print_r("Offset from UTC in secs: ".$nowTz->getOffset()."\n\n");
 
-        $nowTz = new \DateTime(null, $targetTz3);
+        $nowTz = new \DateTime('now', $targetTz3);
         print_r($nowTz);
         print_r("Offset from UTC in secs: ".$nowTz->getOffset()."\n\n");
 
-        $nowTz = new \DateTime(null, $targetTz4);
+        $nowTz = new \DateTime('now', $targetTz4);
         print_r($nowTz);
         print_r("Offset from UTC in secs: ".$nowTz->getOffset()."\n\n");
 
-        $nowTz = new \DateTime(null, $targetTz5);
+        $nowTz = new \DateTime('now', $targetTz5);
         print_r($nowTz);
         print_r("Offset from UTC in secs: ".$nowTz->getOffset()."\n\n");
 
 
         // now in utc
-        $nowUtc = new \DateTime(null, $utcTz);
+        $nowUtc = new \DateTime('now', $utcTz);
         print_r($nowUtc);
         print_r("Offset from UTC in secs: ".$nowUtc->getOffset()."\n\n");
 

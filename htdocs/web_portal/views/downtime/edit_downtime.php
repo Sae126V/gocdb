@@ -17,7 +17,7 @@ if (count($affectedSites) == 1) {
    $siteTimezoneId = 'UTC';
 }
 
-$nowInTargetTz = new \DateTime(null, new \DateTimeZone($siteTimezoneId));
+$nowInTargetTz = new \DateTime('now', new \DateTimeZone($siteTimezoneId));
 $offsetInSecsFromUtc = $nowInTargetTz->getOffset();
 
 foreach($downtime->getEndpointLocations() as $endpoints){

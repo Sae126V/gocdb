@@ -78,7 +78,7 @@ class ArchivedNGI {
     protected $originalCreationDate;
 
     public function __construct() {
-        $this->deletedDate =  new \DateTime(null, new \DateTimeZone('UTC'));
+        $this->deletedDate =  new \DateTime('now', new \DateTimeZone('UTC'));
     }
 
     /**

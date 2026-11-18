@@ -160,7 +160,7 @@ class RoleActionRecord {
             $rolePreStatus, $roleNewStatus, $roleTypeId, $roleTypeName,
             $roleTargetOwnedEntityId, $roleTargetOwnedEntityType, $roleUserId, $roleUserPrinciple) {
 
-        $this->actionDate =  new \DateTime(null, new \DateTimeZone('UTC'));
+        $this->actionDate =  new \DateTime('now', new \DateTimeZone('UTC'));
 
         $this->updatedByUserId = $updatedByUserId;
         $this->updatedByUserPrinciple = $updatedByUserPrinciple;
