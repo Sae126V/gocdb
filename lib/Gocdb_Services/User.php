@@ -183,7 +183,7 @@ class User extends AbstractEntityService
      */
     public function updateLastLoginTime(\User $user)
     {
-        $nowUtc = new \DateTime(null, new \DateTimeZone('UTC'));
+        $nowUtc = new \DateTime('now', new \DateTimeZone('UTC'));
         $this->em->getConnection()->beginTransaction();
         try {
             // Set the user's member variables

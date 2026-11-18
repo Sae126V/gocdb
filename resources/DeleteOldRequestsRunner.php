@@ -14,7 +14,7 @@ $dql = "SELECT l FROM LinkIdentityRequest l";
 $requests = $entityManager->createQuery($dql)->getResult();
 
 // Remove requests older than one day
-$nowUtc = new \DateTime(null, new \DateTimeZone('UTC'));
+$nowUtc = new \DateTime('now', new \DateTimeZone('UTC'));
 $oneDay = \DateInterval::createFromDateString('1 days');
 $yesterdayUtc = $nowUtc->sub($oneDay);
 
@@ -32,5 +32,5 @@ foreach ($requests as $request) {
 
 $em->flush();
 
-$nowUtc = new \DateTime(null, new \DateTimeZone('UTC'));
+$nowUtc = new \DateTime('now', new \DateTimeZone('UTC'));
 echo "Completed ok: " . $nowUtc->format('D, d M Y H:i:s');

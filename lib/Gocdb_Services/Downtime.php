@@ -196,7 +196,7 @@ class Downtime extends AbstractEntityService{
         $this->validateDates($start, $end);
 
         // calculate classification
-        $nowPlus1Day = new \DateTime(null, new \DateTimeZone('UTC'));
+        $nowPlus1Day = new \DateTime('now', new \DateTimeZone('UTC'));
         $oneDay = \DateInterval::createFromDateString('1 days');
         if($start > $nowPlus1Day->add($oneDay)) {
             $class = "SCHEDULED";
@@ -213,7 +213,7 @@ class Downtime extends AbstractEntityService{
             $dt->setSeverity($values['DOWNTIME']['SEVERITY']);
             $dt->setStartDate($start);
             $dt->setEndDate($end);
-            $dt->setInsertDate(new \DateTime(null, new \DateTimeZone('UTC')) );
+            $dt->setInsertDate(new \DateTime('now', new \DateTimeZone('UTC')) );
             // Create a new pk and persist/flush to sync in-mem object state
             // with DB - is needed so that the call to v4DowntimePK->getId() actually
             // returns a value (we can still rollback no probs if an issue occurs
@@ -292,7 +292,7 @@ class Downtime extends AbstractEntityService{
      * @throws \Exception With a human readable message if the dates are invalid
      */
     private function validateDates(\DateTime $start, \DateTime $end) {
-        $now = new \DateTime(null, new \DateTimeZone('UTC'));
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
         $start->setTimezone(new \DateTimeZone('UTC'));
         $end->setTimezone(new \DateTimeZone('UTC'));
         if ($start >= $end) {
@@ -469,7 +469,7 @@ class Downtime extends AbstractEntityService{
         $this->validateDates($newStart, $newEnd);
 
         // recalculate classification
-        $nowPlus1Day = new \DateTime(null, new \DateTimeZone('UTC'));
+        $nowPlus1Day = new \DateTime('now', new \DateTimeZone('UTC'));
         $oneDay = \DateInterval::createFromDateString('1 days');
         if($newStart > $nowPlus1Day->add($oneDay)) {
             $class = "SCHEDULED";
@@ -530,7 +530,7 @@ class Downtime extends AbstractEntityService{
      */
     private function validateStartTime($startTime, $classification) {
         if ($classification === "SCHEDULED") {
-            $nowUtc = new \DateTime(null, new \DateTimeZone('UTC'));
+            $nowUtc = new \DateTime('now', new \DateTimeZone('UTC'));
             $oneDay = \DateInterval::createFromDateString('1 days');
             $tomorrowUtc = $nowUtc->add($oneDay);
 
@@ -568,7 +568,7 @@ class Downtime extends AbstractEntityService{
     public function editValidationDatePreConditions(\Downtime $dt){
         // Make sure all dates are treated as UTC!
         //date_default_timezone_set("UTC");
-        $nowUtc = new \DateTime(null, new \DateTimeZone('UTC'));
+        $nowUtc = new \DateTime('now', new \DateTimeZone('UTC'));
         /* @var $oldStart \DateTime */
         $oldStart = $dt->getStartDate()->setTimezone(new \DateTimeZone('UTC'));
         /* @var $oldEnd \DateTime */
@@ -596,7 +596,7 @@ class Downtime extends AbstractEntityService{
 
         $oldStart = $dt->getStartDate()->setTimezone(new \DateTimeZone('UTC'));
         $oldEnd = $dt->getEndDate()->setTimezone(new \DateTimeZone('UTC'));
-        $now = new \DateTime(null, new \DateTimeZone('UTC'));
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
 
         // Duration can't increase
         // Duration is measured in seconds
@@ -639,7 +639,7 @@ class Downtime extends AbstractEntityService{
         }
 
         $sixtySecs = \DateInterval::createFromDateString('1 minutes');
-        $now = new \DateTime(null, new \DateTimeZone('UTC'));
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
         $sixtySecsFromNow = $now->add($sixtySecs);
         //$this->validateDates($dt->getStartDate(), $end);
 

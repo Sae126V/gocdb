@@ -135,7 +135,7 @@ function draw(\User $user = null) {
         throw new Exception("Unregistered users can't add a downtime.");
     }
 
-    $nowUtcDateTime = new \DateTime(null, new \DateTimeZone("UTC"));
+    $nowUtcDateTime = new \DateTime('now', new \DateTimeZone("UTC"));
     //$twoDaysAgoUtcDateTime = $nowUtcDateTime->sub(\DateInterval::createFromDateString('2 days'));
     //$twoDaysAgoUtc = $twoDaysAgoUtcDateTime->format('d/m/Y H:i'); //e.g.  02/10/2013 13:20
 
@@ -148,7 +148,7 @@ function draw(\User $user = null) {
         if($site != null){
             $siteTzId = $site->getTimeZoneId();
             if( !empty($siteTzId) ){
-                $nowInTargetTz = new \DateTime(null, new \DateTimeZone($siteTzId));
+                $nowInTargetTz = new \DateTime('now', new \DateTimeZone($siteTzId));
                 $offsetInSecsFromUtc = $nowInTargetTz->getOffset();
             } else {
                 $siteTzId = 'UTC';

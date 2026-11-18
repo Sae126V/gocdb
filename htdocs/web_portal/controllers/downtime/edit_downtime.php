@@ -64,7 +64,7 @@ function draw(\User $user = null) {
     $serv->editValidationDatePreConditions($dt);
     $serv->authorisation($dt->getServices(), $user);
 
-    $nowUtcDateTime = new \DateTime(null, new \DateTimeZone("UTC"));
+    $nowUtcDateTime = new \DateTime('now', new \DateTimeZone("UTC"));
     $twoDaysAgoUtcDateTime = $nowUtcDateTime->sub(\DateInterval::createFromDateString('2 days'));
     $twoDaysAgoUtc = $twoDaysAgoUtcDateTime->format('d/m/Y H:i'); //e.g.  02/10/2013 13:20
 
