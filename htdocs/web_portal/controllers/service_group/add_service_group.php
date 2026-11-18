@@ -22,7 +22,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
   /*====================================================== */
-use Exception;
 
 require_once __DIR__ . '/../../../../lib/Gocdb_Services/Factory.php';
 require_once __DIR__ . '/../../components/Get_User_Principle.php';
