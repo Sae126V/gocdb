@@ -161,9 +161,9 @@ class GetSubGridList implements IPIQuery, IPIQueryRenderable {
 
         foreach ( $subGrids as $subGrid ) {
             $xmlSubGrid = $xml->addChild ( 'SUBGRID' );
-            $xmlSubGrid->addAttribute ( 'PRIMARY_KEY', $subGrid->getId () . "G0" );
-            $xmlSubGrid->addAttribute ( 'SUBGRID_NAME', $subGrid->getName () );
-            $xmlSubGrid->addAttribute ( 'PARENT_ROC', $subGrid->getNgi ()->getName () );
+            $xmlSubGrid->addAttribute ( 'PRIMARY_KEY', (string) $subGrid->getId () . "G0" );
+            $xmlSubGrid->addAttribute ( 'SUBGRID_NAME', (string) $subGrid->getName () );
+            $xmlSubGrid->addAttribute ( 'PARENT_ROC', (string) $subGrid->getNgi ()->getName () );
         }
 
         $dom_sxe = dom_import_simplexml ( $xml );

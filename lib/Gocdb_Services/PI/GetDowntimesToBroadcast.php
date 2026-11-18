@@ -316,8 +316,8 @@ class GetDowntimeToBroadcast implements IPIQuery, IPIQueryPageable, IPIQueryRend
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         $downtimes = $this->downtimes;
@@ -330,19 +330,19 @@ class GetDowntimeToBroadcast implements IPIQuery, IPIQueryPageable, IPIQueryRend
 
             foreach ($orderedServices as $se) {
                 $xmlDowntime = $xml->addChild('DOWNTIME');
-                $xmlDowntime->addAttribute("ID", $downtime->getId());
+                $xmlDowntime->addAttribute("ID", (string) $downtime->getId());
                 // Note, we are preserving the v4 primary keys here.
-                $xmlDowntime->addAttribute("PRIMARY_KEY", $downtime->getPrimaryKey());
+                $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtime->getPrimaryKey());
 
-                $xmlDowntime->addAttribute("CLASSIFICATION", $downtime->getClassification());
-                $xmlDowntime->addChild("PRIMARY_KEY", $downtime->getPrimaryKey());
+                $xmlDowntime->addAttribute("CLASSIFICATION", (string) $downtime->getClassification());
+                $xmlDowntime->addChild("PRIMARY_KEY", (string) $downtime->getPrimaryKey());
 
-                $xmlDowntime->addChild("SITENAME", $se->getParentSite()->getShortName());
-                $xmlDowntime->addChild("HOSTNAME", $se->getHostName());
-                $xmlDowntime->addChild("SERVICE_TYPE", $se->getServiceType()->getName());
-                $xmlDowntime->addChild("HOSTED_BY", $se->getParentSite()->getShortName());
+                $xmlDowntime->addChild("SITENAME", (string) $se->getParentSite()->getShortName());
+                $xmlDowntime->addChild("HOSTNAME", (string) $se->getHostName());
+                $xmlDowntime->addChild("SERVICE_TYPE", (string) $se->getServiceType()->getName());
+                $xmlDowntime->addChild("HOSTED_BY", (string) $se->getParentSite()->getShortName());
                 $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtime->getId(), ENT_COMPAT | ENT_HTML401);
-                $xmlDowntime->addChild('GOCDB_PORTAL_URL', $portalUrl);
+                $xmlDowntime->addChild('GOCDB_PORTAL_URL', (string) $portalUrl);
                 $xmlEndpoints = $xmlDowntime->addChild ( 'AFFECTED_ENDPOINTS' );
                 if($this->renderMultipleEndpoints){
 
@@ -351,26 +351,26 @@ class GetDowntimeToBroadcast implements IPIQuery, IPIQueryPageable, IPIQueryRend
 
                     foreach ($orderedEndpoints as $endpoint) {
                         $xmlEndpoint = $xmlEndpoints->addChild ( 'ENDPOINT' );
-                        $xmlEndpoint->addChild ( 'ID', $endpoint->getId());
-                        $xmlEndpoint->addChild ( 'NAME', $endpoint->getName());
+                        $xmlEndpoint->addChild ( 'ID', (string) $endpoint->getId());
+                        $xmlEndpoint->addChild ( 'NAME', (string) $endpoint->getName());
                         // Extensions?
-                        $xmlEndpoint->addChild ( 'URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
-                        $xmlEndpoint->addChild ( 'INTERFACENAME', $endpoint->getInterfaceName());
+                        $xmlEndpoint->addChild ( 'URL', htmlspecialchars((string) $endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
+                        $xmlEndpoint->addChild ( 'INTERFACENAME', (string) $endpoint->getInterfaceName());
                         if ($endpoint->getMonitored()) {
                             $mon = "Y";
                         } else {
                             $mon = "N";
                         }
-                        $xmlEndpoint->addChild('ENDPOINT_MONITORED', $mon);
+                        $xmlEndpoint->addChild('ENDPOINT_MONITORED', (string) $mon);
                         //$xmlEndpoint->addChild('CONTACT_EMAIL', $endpoint->getEmail());
                     }
                 }
-                $xmlDowntime->addChild('SEVERITY', $downtime->getSeverity());
-                $xmlDowntime->addChild('DESCRIPTION', xssafe($downtime->getDescription()));
-                $xmlDowntime->addChild('INSERT_DATE', $downtime->getInsertDate()->getTimestamp());
-                $xmlDowntime->addChild('START_DATE', $downtime->getStartDate()->getTimestamp());
-                $xmlDowntime->addChild('END_DATE', $downtime->getEndDate()->getTimestamp());
-                $xmlDowntime->addChild('REMINDER_START_DOWNTIME', $downtime->getAnnounceDate()->getTimestamp());
+                $xmlDowntime->addChild('SEVERITY', (string) $downtime->getSeverity());
+                $xmlDowntime->addChild('DESCRIPTION', (string) xssafe($downtime->getDescription()));
+                $xmlDowntime->addChild('INSERT_DATE', (string) $downtime->getInsertDate()->getTimestamp());
+                $xmlDowntime->addChild('START_DATE', (string) $downtime->getStartDate()->getTimestamp());
+                $xmlDowntime->addChild('END_DATE', (string) $downtime->getEndDate()->getTimestamp());
+                $xmlDowntime->addChild('REMINDER_START_DOWNTIME', (string) $downtime->getAnnounceDate()->getTimestamp());
                 // Intentionally left blank to duplicate GOCDBv4 PI behaviour
                 $xmlDowntime->addChild('BROADCASTING_START_DOWNTIME', "");
             }

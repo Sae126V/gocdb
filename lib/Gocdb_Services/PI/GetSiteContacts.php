@@ -281,19 +281,19 @@ class GetSiteContacts implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
 
         foreach ( $sites as $site ) {
             $xmlSite = $xml->addChild ( 'SITE' );
-            $xmlSite->addAttribute ( 'ID', $site->getId () . "G0" );
-            $xmlSite->addAttribute ( 'PRIMARY_KEY', $site->getPrimaryKey () );
-            $xmlSite->addAttribute ( 'NAME', $site->getShortName () );
+            $xmlSite->addAttribute ( 'ID', (string) $site->getId () . "G0" );
+            $xmlSite->addAttribute ( 'PRIMARY_KEY', (string) $site->getPrimaryKey () );
+            $xmlSite->addAttribute ( 'NAME', (string) $site->getShortName () );
 
-            $xmlSite->addChild ( 'PRIMARY_KEY', $site->getPrimaryKey () );
-            $xmlSite->addChild ( 'SHORT_NAME', $site->getShortName () );
+            $xmlSite->addChild ( 'PRIMARY_KEY', (string) $site->getPrimaryKey () );
+            $xmlSite->addChild ( 'SHORT_NAME', (string) $site->getShortName () );
 
             // Sort roles
             $orderedRoles = $this->helpers->orderArrById($site->getRoles());
@@ -305,23 +305,23 @@ class GetSiteContacts implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
                     if ($this->roleT == '%%' || $rtype == $this->roleT) {
                         $user = $role->getUser ();
                         $xmlContact = $xmlSite->addChild ( 'CONTACT' );
-                        $xmlContact->addAttribute ( 'USER_ID', $user->getId () . "G0" );
-                        $xmlContact->addAttribute ( 'PRIMARY_KEY', $user->getId () . "G0" );
-                        $xmlContact->addChild ( 'FORENAME', $user->getForename () );
-                        $xmlContact->addChild ( 'SURNAME', $user->getSurname () );
-                        $xmlContact->addChild ( 'TITLE', $user->getTitle () );
-                        $xmlContact->addChild ( 'EMAIL', $user->getEmail () );
-                        $xmlContact->addChild ( 'TEL', $user->getTelephone () );
+                        $xmlContact->addAttribute ( 'USER_ID', (string) $user->getId () . "G0" );
+                        $xmlContact->addAttribute ( 'PRIMARY_KEY', (string) $user->getId () . "G0" );
+                        $xmlContact->addChild ( 'FORENAME', (string) $user->getForename () );
+                        $xmlContact->addChild ( 'SURNAME', (string) $user->getSurname () );
+                        $xmlContact->addChild ( 'TITLE', (string) $user->getTitle () );
+                        $xmlContact->addChild ( 'EMAIL', (string) $user->getEmail () );
+                        $xmlContact->addChild ( 'TEL', (string) $user->getTelephone () );
 
                         if (\Factory::getConfigService()->getAPIAllAuthRealms()) {
-                            $xmlContact->addChild ( 'CERTDN', $serv->getIdStringByAuthType ( $user, 'X.509' ) );
-                            $xmlContact->addChild ( 'EGICHECKIN', $serv->getIdStringByAuthType ( $user, 'EGI Proxy IdP' ) );
-                            $xmlContact->addChild ( 'IRISIAM', $serv->getIdStringByAuthType ( $user, 'IRIS IAM - OIDC' ) );
+                            $xmlContact->addChild ( 'CERTDN', (string) $serv->getIdStringByAuthType ( $user, 'X.509' ) );
+                            $xmlContact->addChild ( 'EGICHECKIN', (string) $serv->getIdStringByAuthType ( $user, 'EGI Proxy IdP' ) );
+                            $xmlContact->addChild ( 'IRISIAM', (string) $serv->getIdStringByAuthType ( $user, 'IRIS IAM - OIDC' ) );
                         } else {
-                            $xmlContact->addChild ( 'CERTDN', $serv->getDefaultIdString ( $user ) );
+                            $xmlContact->addChild ( 'CERTDN', (string) $serv->getDefaultIdString ( $user ) );
                         }
 
-                        $xmlContact->addChild ( 'ROLE_NAME', $role->getRoleType ()->getName () );
+                        $xmlContact->addChild ( 'ROLE_NAME', (string) $role->getRoleType ()->getName () );
                     }
                 }
             }

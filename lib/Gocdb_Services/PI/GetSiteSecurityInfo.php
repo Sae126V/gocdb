@@ -271,20 +271,20 @@ class GetSiteSecurityInfo implements IPIQuery, IPIQueryPageable, IPIQueryRendera
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         foreach ( $sites as $site ) {
             $xmlSite = $xml->addChild ( 'SITE' );
-            $xmlSite->addAttribute ( 'ID', $site->getId () . "G0" );
-            $xmlSite->addAttribute ( 'PRIMARY_KEY', $site->getPrimaryKey () );
-            $xmlSite->addAttribute ( 'NAME', $site->getShortName () );
+            $xmlSite->addAttribute ( 'ID', (string) $site->getId () . "G0" );
+            $xmlSite->addAttribute ( 'PRIMARY_KEY', (string) $site->getPrimaryKey () );
+            $xmlSite->addAttribute ( 'NAME', (string) $site->getShortName () );
 
-            $xmlSite->addChild ( 'PRIMARY_KEY', $site->getPrimaryKey () );
-            $xmlSite->addChild ( 'SHORT_NAME', $site->getShortName () );
-            $xmlSite->addChild ( 'CSIRT_EMAIL', $site->getCsirtEmail () );
-            $xmlSite->addChild ( 'CSIRT_TEL', $site->getCsirtTel () );
+            $xmlSite->addChild ( 'PRIMARY_KEY', (string) $site->getPrimaryKey () );
+            $xmlSite->addChild ( 'SHORT_NAME', (string) $site->getShortName () );
+            $xmlSite->addChild ( 'CSIRT_EMAIL', (string) $site->getCsirtEmail () );
+            $xmlSite->addChild ( 'CSIRT_TEL', (string) $site->getCsirtTel () );
         }
 
         $dom_sxe = dom_import_simplexml ( $xml );

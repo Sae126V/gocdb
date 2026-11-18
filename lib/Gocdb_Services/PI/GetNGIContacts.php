@@ -253,16 +253,16 @@ class GetNGIContacts implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
        foreach($ngis as $ngi) {
             $xmlNgi = $xml->addChild('ROC');
-            $xmlNgi->addAttribute("ID", $ngi->getId());
-            $xmlNgi->addAttribute('ROC_NAME', $ngi->getName());
-            $xmlNgi->addChild('ROCNAME', $ngi->getName());
-            $xmlNgi->addChild('MAIL_CONTACT', $ngi->getEmail());
+            $xmlNgi->addAttribute("ID", (string) $ngi->getId());
+            $xmlNgi->addAttribute('ROC_NAME', (string) $ngi->getName());
+            $xmlNgi->addChild('ROCNAME', (string) $ngi->getName());
+            $xmlNgi->addChild('MAIL_CONTACT', (string) $ngi->getEmail());
             $portalUrl = $this->baseUrl.'/index.php?Page_Type=NGI&id=' . $ngi->getId ();
             $portalUrl = htmlspecialchars ( $portalUrl, ENT_COMPAT | ENT_HTML401 );
             $helpers->addIfNotEmpty ( $xmlNgi, 'GOCDB_PORTAL_URL', $portalUrl );
@@ -276,24 +276,24 @@ class GetNGIContacts implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
                     if($this->roleT == '%%' || $rtype == $this->roleT) {
                         $user = $role->getUser();
                         $xmlContact = $xmlNgi->addChild('CONTACT');
-                        $xmlContact->addAttribute('USER_ID', $user->getId() . "G0");
-                        $xmlContact->addAttribute('PRIMARY_KEY', $user->getId() . "G0");
-                        $xmlContact->addChild('FORENAME', $user->getForename());
-                        $xmlContact->addChild('SURNAME', $user->getSurname());
-                        $xmlContact->addChild('TITLE', $user->getTitle());
-                        $xmlContact->addChild('EMAIL', $user->getEmail());
-                        $xmlContact->addChild('TEL', $user->getTelephone());
+                        $xmlContact->addAttribute('USER_ID', (string) $user->getId() . "G0");
+                        $xmlContact->addAttribute('PRIMARY_KEY', (string) $user->getId() . "G0");
+                        $xmlContact->addChild('FORENAME', (string) $user->getForename());
+                        $xmlContact->addChild('SURNAME', (string) $user->getSurname());
+                        $xmlContact->addChild('TITLE', (string) $user->getTitle());
+                        $xmlContact->addChild('EMAIL', (string) $user->getEmail());
+                        $xmlContact->addChild('TEL', (string) $user->getTelephone());
 
                         if (\Factory::getConfigService()->getAPIAllAuthRealms()) {
-                            $xmlContact->addChild('CERTDN', $serv->getIdStringByAuthType($user, 'X.509'));
-                            $xmlContact->addChild('EGICHECKIN', $serv->getIdStringByAuthType($user, 'EGI Proxy IdP'));
-                            $xmlContact->addChild('IRISIAM', $serv->getIdStringByAuthType($user, 'IRIS IAM - OIDC'));
+                            $xmlContact->addChild('CERTDN', (string) $serv->getIdStringByAuthType($user, 'X.509'));
+                            $xmlContact->addChild('EGICHECKIN', (string) $serv->getIdStringByAuthType($user, 'EGI Proxy IdP'));
+                            $xmlContact->addChild('IRISIAM', (string) $serv->getIdStringByAuthType($user, 'IRIS IAM - OIDC'));
                         } else {
-                            $xmlContact->addChild('CERTDN', $serv->getDefaultIdString($user));
+                            $xmlContact->addChild('CERTDN', (string) $serv->getDefaultIdString($user));
                         }
 
                         $roleName = $role->getRoleType()->getName();
-                        $xmlContact->addChild('ROLE_NAME', $roleName);
+                        $xmlContact->addChild('ROLE_NAME', (string) $roleName);
                     }
                 }
             }

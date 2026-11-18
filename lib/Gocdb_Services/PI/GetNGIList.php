@@ -166,8 +166,8 @@ protected $query;
 
         foreach ( $ngis as $ngi ) {
             $xmlNgi = $xml->addChild ( 'ROC' );
-            $xmlNgi->addAttribute ( 'PRIMARY_KEY', $ngi->getId () . "G0" );
-            $xmlNgi->addAttribute ( 'ROC_NAME', $ngi->getName () );
+            $xmlNgi->addAttribute ( 'PRIMARY_KEY', (string) $ngi->getId () . "G0" );
+            $xmlNgi->addAttribute ( 'ROC_NAME', (string) $ngi->getName () );
         }
 
         $dom_sxe = dom_import_simplexml ( $xml );
@@ -195,8 +195,8 @@ protected $query;
         foreach($ngis as $ngi) {
             $xmlNgi = $xml->addChild("AdminDomain");
             $xmlNgi->addAttribute("BaseType", "Domain");
-            $xmlNgi->addChild("ID", $ngi->getId());
-            $xmlNgi->addChild("Name", $ngi->getName());
+            $xmlNgi->addChild("ID", (string) $ngi->getId());
+            $xmlNgi->addChild("Name", (string) $ngi->getName());
 
             $xmlNgiExtParent = $xmlNgi->addChild("Extensions");
 
@@ -208,14 +208,14 @@ protected $query;
             $helpers->addExtIfNotEmpty($xmlNgiExtParent, 'Security_Email', $ngi->getSecurityEmail());
             $helpers->addExtIfNotEmpty($xmlNgiExtParent, 'Site_Count', count($ngi->getSites()));
 
-            $xmlNgi->addChild("Description", $ngi->getDescription());
+            $xmlNgi->addChild("Description", (string) $ngi->getDescription());
             $xmlNgi->addChild("Distributed", "true");
 
             $xmlNgiAsoc = $xmlNgi->addChild("Associations");
 
             $sites = $ngi->getSites();
             foreach($sites as $site) {
-                $xmlNgiAsoc->addChild("ChildDomainID", $site->getPrimaryKey());
+                $xmlNgiAsoc->addChild("ChildDomainID", (string) $site->getPrimaryKey());
             }
 
         }

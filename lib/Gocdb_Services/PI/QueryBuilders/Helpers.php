@@ -266,7 +266,7 @@ class Helpers {
      */
     public function addIfNotEmpty($xml, $tagName, $value) {
         if ($value != null && $value != "") {
-            $xml->addChild($tagName, $value);
+            $xml->addChild($tagName, (string) $value);
         }
     }
 
@@ -281,9 +281,9 @@ class Helpers {
     public function addExtIfNotEmpty($xmlParent, $tagName, $value) {
         if ($value != "") {
             $extension = $xmlParent->addChild("Extension");
-            $extension->addChild("LocalID", $tagName);
-            $extension->addChild("Key", $tagName);
-            $extension->addChild("Value", $value);
+            $extension->addChild("LocalID", (string) $tagName);
+            $extension->addChild("Key", (string) $tagName);
+            $extension->addChild("Value", (string) $value);
         }
     }
 
@@ -328,7 +328,7 @@ class Helpers {
         // add self link (don't modify the query)
         $selfLink = $metaXml->addChild("link");
         $selfLink->addAttribute("rel", "self");
-        $selfLink->addAttribute("href", $urlBase.$urlParts['query']);
+        $selfLink->addAttribute("href", (string) $urlBase.$urlParts['query']);
 
         // add next link
         if ($next <= $last) {
@@ -337,7 +337,7 @@ class Helpers {
             //$escapedNextQueryUrl = htmlspecialchars( $nextQueryUrl, ENT_QUOTES, 'UTF-8' );
             $nextLink = $metaXml->addChild("link");
             $nextLink->addAttribute("rel", "next");
-            $nextLink->addAttribute("href", $urlBase.$nextQueryUrl);
+            $nextLink->addAttribute("href", (string) $urlBase.$nextQueryUrl);
         }
 
         // add prev  link
@@ -347,7 +347,7 @@ class Helpers {
             //$escapedNextQueryUrl = htmlspecialchars( $nextQueryUrl, ENT_QUOTES, 'UTF-8' );
             $prevLink = $metaXml->addChild("link");
             $prevLink->addAttribute("rel", "prev");
-            $prevLink->addAttribute("href", $urlBase.$prevQueryUrl);
+            $prevLink->addAttribute("href", (string) $urlBase.$prevQueryUrl);
         }
 
         // add first link
@@ -355,14 +355,14 @@ class Helpers {
         $firstQueryUrl = http_build_query($urlQueryParamsArray);
         $firstLink = $metaXml->addChild("link");
         $firstLink->addAttribute("rel", "first");
-        $firstLink->addAttribute("href", $urlBase.$firstQueryUrl);
+        $firstLink->addAttribute("href", (string) $urlBase.$firstQueryUrl);
 
         // add last link
         $urlQueryParamsArray['page'] = $last;
         $lastQueryUrl = http_build_query($urlQueryParamsArray);
         $lastLink = $metaXml->addChild("link");
         $lastLink->addAttribute("rel", "last");
-        $lastLink->addAttribute("href", $urlBase.$lastQueryUrl);
+        $lastLink->addAttribute("href", (string) $urlBase.$lastQueryUrl);
     }
 
 
@@ -394,7 +394,7 @@ class Helpers {
         // add self link (don't modify the query)
         $selfLink = $metaXml->addChild("link");
         $selfLink->addAttribute("rel", "self");
-        $selfLink->addAttribute("href", $urlBase.$urlParts['query']);
+        $selfLink->addAttribute("href", (string) $urlBase.$urlParts['query']);
 
         // add next link
         if ($next_cursor !== null ){ //&& $next_cursor > 0) {
@@ -404,7 +404,7 @@ class Helpers {
             //$escapedNextQueryUrl = htmlspecialchars( $nextQueryUrl, ENT_QUOTES, 'UTF-8' );
             $nextLink = $metaXml->addChild("link");
             $nextLink->addAttribute("rel", "next");
-            $nextLink->addAttribute("href", $urlBase.$nextQueryUrl);
+            $nextLink->addAttribute("href", (string) $urlBase.$nextQueryUrl);
         }
 
         // add prev  link
@@ -415,7 +415,7 @@ class Helpers {
             //$escapedNextQueryUrl = htmlspecialchars( $nextQueryUrl, ENT_QUOTES, 'UTF-8' );
             $prevLink = $metaXml->addChild("link");
             $prevLink->addAttribute("rel", "prev");
-            $prevLink->addAttribute("href", $urlBase.$prevQueryUrl);
+            $prevLink->addAttribute("href", (string) $urlBase.$prevQueryUrl);
         }
 
         // add start link
@@ -425,7 +425,7 @@ class Helpers {
         $firstQueryUrl = http_build_query($urlQueryParamsArray);
         $firstLink = $metaXml->addChild("link");
         $firstLink->addAttribute("rel", "start");
-        $firstLink->addAttribute("href", $urlBase.$firstQueryUrl);
+        $firstLink->addAttribute("href", (string) $urlBase.$firstQueryUrl);
 
         // add last link
 //         $urlQueryParamsArray['page'] = $last;

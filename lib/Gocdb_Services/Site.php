@@ -1079,8 +1079,8 @@ class Site extends AbstractEntityService{
             /*Trim off trailing and leading whitspace - as we currently don't want this.
             *The input array is awkwardly formatted as keys didn't use to have to be unique.
             */
-            $key = trim($prop[0]);
-            $value = trim($prop[1]);
+            $key = trim((string) $prop[0]);
+            $value = trim((string) $prop[1]);
 
             /*Find out if a property with the provided key already exists, if
             *we are preventing overwrites, this will be a problem. If we are not,
@@ -1368,13 +1368,13 @@ class Site extends AbstractEntityService{
         $xml = new \SimpleXMLElement("<map></map>");
                 foreach($sites as $site) {
             $xmlSite = $xml->addChild('Site');
-            $xmlSite->addAttribute('ShortName', $site->getShortName());
-            $xmlSite->addAttribute('OfficialName', $site->getOfficialName());
+            $xmlSite->addAttribute('ShortName', (string) $site->getShortName());
+            $xmlSite->addAttribute('OfficialName', (string) $site->getOfficialName());
             $sitePortalUrl = $portalUrl . '/index.php?Page_Type=Site&id=' . $site->getId();
             $xmlSite->addAttribute('PortalURL', htmlspecialchars($sitePortalUrl, ENT_COMPAT | ENT_HTML401));
-            $xmlSite->addAttribute('Description', htmlspecialchars($site->getDescription(), ENT_COMPAT | ENT_HTML401));
-            $xmlSite->addAttribute('Latitude', $site->getLatitude());
-            $xmlSite->addAttribute('Longitude', $site->getLongitude());
+            $xmlSite->addAttribute('Description', htmlspecialchars((string) $site->getDescription(), ENT_COMPAT | ENT_HTML401));
+            $xmlSite->addAttribute('Latitude', (string) $site->getLatitude());
+            $xmlSite->addAttribute('Longitude', (string) $site->getLongitude());
                 }
 
                 $domXmlMapElement = dom_import_simplexml($xml);

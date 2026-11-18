@@ -270,24 +270,24 @@ class GetServiceGroupRole implements IPIQuery, IPIQueryPageable, IPIQueryRendera
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         $sgs = $this->sgs;
 
         foreach ( $sgs as $sg ) {
             $xmlSg = $xml->addChild ( 'SERVICE_GROUP' );
-            $xmlSg->addAttribute ( "ID", $sg->getId ());
-            $xmlSg->addAttribute ( "PRIMARY_KEY", $sg->getId () . "G0" );
-            $xmlSg->addChild ( 'NAME', $sg->getName () );
-            $xmlSg->addChild ( 'DESCRIPTION', htmlspecialchars ( $sg->getDescription (), ENT_COMPAT | ENT_HTML401 ) );
+            $xmlSg->addAttribute ( "ID", (string) $sg->getId ());
+            $xmlSg->addAttribute ( "PRIMARY_KEY", (string) $sg->getId () . "G0" );
+            $xmlSg->addChild ( 'NAME', (string) $sg->getName () );
+            $xmlSg->addChild ( 'DESCRIPTION', htmlspecialchars ( (string) $sg->getDescription (), ENT_COMPAT | ENT_HTML401 ) );
             $mon = ($sg->getMonitored ()) ? 'Y' : 'N';
-            $xmlSg->addChild ( 'MONITORED', $mon );
-            $xmlSg->addChild ( 'CONTACT_EMAIL', $sg->getEmail () );
+            $xmlSg->addChild ( 'MONITORED', (string) $mon );
+            $xmlSg->addChild ( 'CONTACT_EMAIL', (string) $sg->getEmail () );
             $url = $this->baseUrl.'/index.php?Page_Type=Service_Group&id=' . $sg->getId ();
             $url = htmlspecialchars ( $url, ENT_COMPAT | ENT_HTML401 );
-            $xmlSg->addChild ( 'GOCDB_PORTAL_URL', $url );
+            $xmlSg->addChild ( 'GOCDB_PORTAL_URL', (string) $url );
 
             // Sort roles
             $orderedRoles = $this->helpers->orderArrById($sg->getRoles());
@@ -295,21 +295,21 @@ class GetServiceGroupRole implements IPIQuery, IPIQueryPageable, IPIQueryRendera
             foreach ($orderedRoles as $role) {
                 $user = $role->getUser ();
                 $xmlUser = $xmlSg->addChild ( 'USER' );
-                $xmlUser->addChild ( 'FORENAME', $user->getForename () );
-                $xmlUser->addChild ( 'SURNAME', $user->getSurname () );
+                $xmlUser->addChild ( 'FORENAME', (string) $user->getForename () );
+                $xmlUser->addChild ( 'SURNAME', (string) $user->getSurname () );
 
                 if (\Factory::getConfigService()->getAPIAllAuthRealms()) {
-                    $xmlUser->addChild ( 'CERTDN', $serv->getIdStringByAuthType ( $user, 'X.509' ) );
-                    $xmlUser->addChild ( 'EGICHECKIN', $serv->getIdStringByAuthType ( $user, 'EGI Proxy IdP' ) );
-                    $xmlUser->addChild ( 'IRISIAM', $serv->getIdStringByAuthType ( $user, 'IRIS IAM - OIDC' ) );
+                    $xmlUser->addChild ( 'CERTDN', (string) $serv->getIdStringByAuthType ( $user, 'X.509' ) );
+                    $xmlUser->addChild ( 'EGICHECKIN', (string) $serv->getIdStringByAuthType ( $user, 'EGI Proxy IdP' ) );
+                    $xmlUser->addChild ( 'IRISIAM', (string) $serv->getIdStringByAuthType ( $user, 'IRIS IAM - OIDC' ) );
                 } else {
-                    $xmlUser->addChild ( 'CERTDN', $serv->getDefaultIdString ( $user ) );
+                    $xmlUser->addChild ( 'CERTDN', (string) $serv->getDefaultIdString ( $user ) );
                 }
 
                 $url = $this->baseUrl.'/index.php?Page_Type=User&id=' . $user->getId ();
                 $url = htmlspecialchars ( $url, ENT_COMPAT | ENT_HTML401 );
-                $xmlUser->addChild ( 'GOCDB_PORTAL_URL', $url );
-                $xmlUser->addChild ( 'ROLE', $role->getRoleType ()->getName () );
+                $xmlUser->addChild ( 'GOCDB_PORTAL_URL', (string) $url );
+                $xmlUser->addChild ( 'ROLE', (string) $role->getRoleType ()->getName () );
             }
         }
 

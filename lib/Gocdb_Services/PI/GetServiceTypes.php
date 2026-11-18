@@ -164,10 +164,10 @@ class GetServiceTypes implements IPIQuery, IPIQueryRenderable {
 
         foreach($sts as $st) {
             $xmlServiceType = $xml->addChild('SERVICE_TYPE');
-            $xmlServiceType->addAttribute('TYPE_ID', $st->getId() . "G0");
-            $xmlServiceType->addAttribute('PRIMARY_KEY', $st->getId() . "G0");
-            $xmlServiceType->addChild('SERVICE_TYPE_NAME', $st->getName());
-            $xmlServiceType->addChild('SERVICE_TYPE_DESC', $st->getDescription());
+            $xmlServiceType->addAttribute('TYPE_ID', (string) $st->getId() . "G0");
+            $xmlServiceType->addAttribute('PRIMARY_KEY', (string) $st->getId() . "G0");
+            $xmlServiceType->addChild('SERVICE_TYPE_NAME', (string) $st->getName());
+            $xmlServiceType->addChild('SERVICE_TYPE_DESC', (string) $st->getDescription());
         }
 
         $dom_sxe = dom_import_simplexml ( $xml );

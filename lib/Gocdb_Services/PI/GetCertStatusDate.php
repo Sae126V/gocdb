@@ -253,20 +253,20 @@ class GetCertStatusDate implements IPIQuery, IPIQueryPageable, IPIQueryRenderabl
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         foreach ( $allSites as $site ) {
 
                 $xmlSite = $xml->addChild ( 'site' );
-                $xmlSite->addAttribute("ID", $site->getId());
-                $xmlSite->addChild ( 'name', $site->getShortName () );
-                $xmlSite->addChild ( 'cert_status', $site->getCertificationStatus ()->getName () );
+                $xmlSite->addAttribute("ID", (string) $site->getId());
+                $xmlSite->addChild ( 'name', (string) $site->getShortName () );
+                $xmlSite->addChild ( 'cert_status', (string) $site->getCertificationStatus ()->getName () );
                 //Some V4 data was imported without dates. This stops those sites being displayed
                 if ($site->getCertificationStatusChangeDate () != null) {
                 // e.g. <cert_date>29-JAN-13 05.13.08 PM</cert_date>
-                $xmlSite->addChild ( 'cert_date', $site->getCertificationStatusChangeDate ()->format ( 'd-M-y H.i.s A' ) );
+                $xmlSite->addChild ( 'cert_date', (string) $site->getCertificationStatusChangeDate ()->format ( 'd-M-y H.i.s A' ) );
             }
         }
         $dom_sxe = dom_import_simplexml ( $xml );

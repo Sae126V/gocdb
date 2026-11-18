@@ -16,7 +16,7 @@ class AccessTest
     public function getRenderingOutput()
     {
         $xmlElem = new SimpleXMLElement("<results />");
-        $xmlElem->addAttribute('identifier', Get_User_Principle_PI());
+        $xmlElem->addAttribute('identifier', (string) Get_User_Principle_PI());
         $xmlElem->addChild('authorized', 'true');
 
         $domSxe = dom_import_simplexml($xmlElem);

@@ -284,23 +284,23 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         $sgs = $this->sgs;
         foreach ($sgs as $sg) {
             $xmlSg = $xml->addChild('SERVICE_GROUP');
-            $xmlSg->addAttribute("ID", $sg->getId());
-            $xmlSg->addAttribute("PRIMARY_KEY", $sg->getId() . "G0");
-            $xmlSg->addChild('NAME', $sg->getName());
-            $xmlSg->addChild('DESCRIPTION', htmlspecialchars($sg->getDescription(), ENT_COMPAT | ENT_HTML401));
+            $xmlSg->addAttribute("ID", (string) $sg->getId());
+            $xmlSg->addAttribute("PRIMARY_KEY", (string) $sg->getId() . "G0");
+            $xmlSg->addChild('NAME', (string) $sg->getName());
+            $xmlSg->addChild('DESCRIPTION', htmlspecialchars((string) $sg->getDescription(), ENT_COMPAT | ENT_HTML401));
             $mon = ($sg->getMonitored()) ? 'Y' : 'N';
-            $xmlSg->addChild('MONITORED', $mon);
-            $xmlSg->addChild('CONTACT_EMAIL', $sg->getEmail());
+            $xmlSg->addChild('MONITORED', (string) $mon);
+            $xmlSg->addChild('CONTACT_EMAIL', (string) $sg->getEmail());
             $url = $this->baseUrl.'/index.php?Page_Type=Service_Group&id=' . $sg->getId();
             $url = htmlspecialchars($url, ENT_COMPAT | ENT_HTML401);
-            $xmlSg->addChild('GOCDB_PORTAL_URL', $url);
+            $xmlSg->addChild('GOCDB_PORTAL_URL', (string) $url);
 
             // Sort services
             $orderedServices = $this->helpers->orderArrById($sg->getServices());
@@ -308,18 +308,18 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
             foreach ($orderedServices as $service) {
                 // maybe Rename SERVICE_ENDPOINT to SERVICE
                 $xmlService = $xmlSg->addChild('SERVICE_ENDPOINT');
-                $xmlService->addAttribute("PRIMARY_KEY", $service->getId() . "G0");
-                $xmlService->addChild('HOSTNAME', $service->getHostName());
+                $xmlService->addAttribute("PRIMARY_KEY", (string) $service->getId() . "G0");
+                $xmlService->addChild('HOSTNAME', (string) $service->getHostName());
                 $url = $this->baseUrl.'/index.php?Page_Type=Service&id=' . $service->getId();
                 $xmlService->addChild('GOCDB_PORTAL_URL', htmlspecialchars($url, ENT_COMPAT | ENT_HTML401));
-                $xmlService->addChild('SERVICE_TYPE', $service->getServiceType()->getName());
-                $xmlService->addChild('HOST_IP', $service->getIpAddress());
-                $xmlService->addChild('HOST_IPV6', $service->getIpV6Address());
-                $xmlService->addChild('HOSTDN', $service->getDN());
+                $xmlService->addChild('SERVICE_TYPE', (string) $service->getServiceType()->getName());
+                $xmlService->addChild('HOST_IP', (string) $service->getIpAddress());
+                $xmlService->addChild('HOST_IPV6', (string) $service->getIpV6Address());
+                $xmlService->addChild('HOSTDN', (string) $service->getDN());
                 $prod = ($service->getProduction()) ? 'Y' : 'N';
-                $xmlService->addChild('IN_PRODUCTION', $prod);
+                $xmlService->addChild('IN_PRODUCTION', (string) $prod);
                 $mon = ($service->getMonitored()) ? 'Y' : 'N';
-                $xmlService->addChild('NODE_MONITORED', $mon);
+                $xmlService->addChild('NODE_MONITORED', (string) $mon);
 
                 if ($this->renderMultipleEndpoints) {
                     $xmlEndpoints = $xmlService->addChild('ENDPOINTS');
@@ -329,8 +329,8 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
 
                     foreach ($orderedEndpoints as $endpoint) {
                         $xmlEndpoint = $xmlEndpoints->addChild('ENDPOINT');
-                        $xmlEndpoint->addChild('ID', $endpoint->getId());
-                        $xmlEndpoint->addChild('NAME', htmlspecialchars($endpoint->getName(), ENT_COMPAT | ENT_HTML401));
+                        $xmlEndpoint->addChild('ID', (string) $endpoint->getId());
+                        $xmlEndpoint->addChild('NAME', htmlspecialchars((string) $endpoint->getName(), ENT_COMPAT | ENT_HTML401));
                         // Endpoint Extensions
                         $xmlEndpointExtensions = $xmlEndpoint->addChild('EXTENSIONS');
 
@@ -339,19 +339,19 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
 
                         foreach ($orderedEndpointProps as $prop) {
                             $xmlProperty = $xmlEndpointExtensions->addChild('EXTENSION');
-                            $xmlProperty->addChild('LOCAL_ID', $prop->getId());
-                            $xmlProperty->addChild('KEY', xssafe($prop->getKeyName()));
-                            $xmlProperty->addChild('VALUE', xssafe($prop->getKeyValue()));
+                            $xmlProperty->addChild('LOCAL_ID', (string) $prop->getId());
+                            $xmlProperty->addChild('KEY', (string) xssafe($prop->getKeyName()));
+                            $xmlProperty->addChild('VALUE', (string) xssafe($prop->getKeyValue()));
                         }
-                        $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
-                        $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
+                        $xmlEndpoint->addChild('URL', htmlspecialchars((string) $endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
+                        $xmlEndpoint->addChild('INTERFACENAME', (string) $endpoint->getInterfaceName());
                         if ($endpoint->getMonitored()) {
                             $mon = "Y";
                         } else {
                             $mon = "N";
                         }
-                        $xmlEndpoint->addChild('ENDPOINT_MONITORED', $mon);
-                        $xmlEndpoint->addChild('CONTACT_EMAIL', $endpoint->getEmail());
+                        $xmlEndpoint->addChild('ENDPOINT_MONITORED', (string) $mon);
+                        $xmlEndpoint->addChild('CONTACT_EMAIL', (string) $endpoint->getEmail());
                     }
                 }
 
@@ -362,7 +362,7 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
                 $orderedServiceScopes = $this->helpers->orderArrById($service->getScopes());
 
                 foreach ($orderedServiceScopes as $scope) {
-                    $xmlScopes->addChild('SCOPE', xssafe($scope->getName()));
+                    $xmlScopes->addChild('SCOPE', (string) xssafe($scope->getName()));
                 }
 
                 // Service Extensions
@@ -373,9 +373,9 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
 
                 foreach ($orderedServiceProps as $prop) {
                     $xmlProperty = $xmlServiceExtensions->addChild('EXTENSION');
-                    $xmlProperty->addChild('LOCAL_ID', $prop->getId());
-                    $xmlProperty->addChild('KEY', xssafe($prop->getKeyName()));
-                    $xmlProperty->addChild('VALUE', xssafe($prop->getKeyValue()));
+                    $xmlProperty->addChild('LOCAL_ID', (string) $prop->getId());
+                    $xmlProperty->addChild('KEY', (string) xssafe($prop->getKeyName()));
+                    $xmlProperty->addChild('VALUE', (string) xssafe($prop->getKeyValue()));
                 }
             }
 
@@ -386,7 +386,7 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
             $orderedSgScopes = $this->helpers->orderArrById($sg->getScopes());
 
             foreach ($orderedSgScopes as $scope) {
-                $xmlScopes->addChild('SCOPE', xssafe($scope->getName()));
+                $xmlScopes->addChild('SCOPE', (string) xssafe($scope->getName()));
             }
 
             // SG extensions
@@ -397,9 +397,9 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
 
             foreach ($orderedSgProps as $sgProp) {
                 $xmlSgProperty = $xmlSGExtensions->addChild('EXTENSION');
-                $xmlSgProperty->addChild('LOCAL_ID', $sgProp->getId());
-                $xmlSgProperty->addChild('KEY', xssafe($sgProp->getKeyName()));
-                $xmlSgProperty->addChild('VALUE', xssafe($sgProp->getKeyValue()));
+                $xmlSgProperty->addChild('LOCAL_ID', (string) $sgProp->getId());
+                $xmlSgProperty->addChild('KEY', (string) xssafe($sgProp->getKeyName()));
+                $xmlSgProperty->addChild('VALUE', (string) xssafe($sgProp->getKeyValue()));
             }
         }
 

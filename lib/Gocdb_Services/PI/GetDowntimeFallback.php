@@ -367,10 +367,10 @@ class GetDowntime implements IPIQuery {
         foreach ($downtimes as $downtime) {
             $xmlDowntime = $xml->addChild('DOWNTIME');
             // ID is the internal object id/sequence
-            $xmlDowntime->addAttribute("ID", $downtime->getId());
+            $xmlDowntime->addAttribute("ID", (string) $downtime->getId());
             // Note, we are preserving the v4 primary keys here.
-            $xmlDowntime->addAttribute("PRIMARY_KEY", $downtime->getPrimaryKey());
-            $xmlDowntime->addAttribute("CLASSIFICATION", $downtime->getClassification());
+            $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtime->getPrimaryKey());
+            $xmlDowntime->addAttribute("CLASSIFICATION", (string) $downtime->getClassification());
 
             $helpers->addIfNotEmpty($xmlDowntime, 'SEVERITY', $downtime->getSeverity());
             $helpers->addIfNotEmpty($xmlDowntime, 'DESCRIPTION', xssafe($downtime->getDescription()));
@@ -398,17 +398,17 @@ class GetDowntime implements IPIQuery {
                         // Only show the endpoint if is from the current service
                         if ($endpoint->getService() == $service) {
                             $xmlEndpoint = $xmlEndpoints->addChild('ENDPOINT');
-                            $xmlEndpoint->addChild('ID', $endpoint->getId());
-                            $xmlEndpoint->addChild('NAME', $endpoint->getName());
+                            $xmlEndpoint->addChild('ID', (string) $endpoint->getId());
+                            $xmlEndpoint->addChild('NAME', (string) $endpoint->getName());
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
-                            $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
+                            $xmlEndpoint->addChild('URL', htmlspecialchars((string) $endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
+                            $xmlEndpoint->addChild('INTERFACENAME', (string) $endpoint->getInterfaceName());
                             if ($endpoint->getMonitored()) {
                                 $mon = "Y";
                             } else {
                                 $mon = "N";
                             }
-                            $xmlEndpoint->addChild('ENDPOINT_MONITORED', $mon);
+                            $xmlEndpoint->addChild('ENDPOINT_MONITORED', (string) $mon);
                             //$xmlEndpoint->addChild('CONTACT_EMAIL', $endpoint->getEmail());
                         }
                     }
@@ -431,9 +431,9 @@ class GetDowntime implements IPIQuery {
             foreach ($downtime->getServices() as $service) {
                 $xmlDowntime = $xml->addChild('DOWNTIME');
                 // ID is the internal object id/sequence
-                $xmlDowntime->addAttribute("ID", $downtime->getId());
-                $xmlDowntime->addAttribute("PRIMARY_KEY", $downtime->getPrimaryKey());
-                $xmlDowntime->addAttribute("CLASSIFICATION", $downtime->getClassification());
+                $xmlDowntime->addAttribute("ID", (string) $downtime->getId());
+                $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtime->getPrimaryKey());
+                $xmlDowntime->addAttribute("CLASSIFICATION", (string) $downtime->getClassification());
                 $helpers->addIfNotEmpty($xmlDowntime, 'PRIMARY_KEY', $downtime->getPrimaryKey());
                 $helpers->addIfNotEmpty($xmlDowntime, 'HOSTNAME', $service->getHostName());
                 $helpers->addIfNotEmpty($xmlDowntime, 'SERVICE_TYPE', $service->getServiceType()->getName());
@@ -450,17 +450,17 @@ class GetDowntime implements IPIQuery {
                     foreach ($downtime->getEndpointLocations() as $endpoint) {
                         if (in_array($endpoint, $service->getEndpointLocations()->toArray())) {
                             $xmlEndpoint = $xmlEndpoints->addChild('ENDPOINT');
-                            $xmlEndpoint->addChild('ID', $endpoint->getId());
-                            $xmlEndpoint->addChild('NAME', $endpoint->getName());
+                            $xmlEndpoint->addChild('ID', (string) $endpoint->getId());
+                            $xmlEndpoint->addChild('NAME', (string) $endpoint->getName());
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
-                            $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
+                            $xmlEndpoint->addChild('URL', htmlspecialchars((string) $endpoint->getUrl(), ENT_COMPAT | ENT_HTML401));
+                            $xmlEndpoint->addChild('INTERFACENAME', (string) $endpoint->getInterfaceName());
                             if ($endpoint->getMonitored()) {
                                 $mon = "Y";
                             } else {
                                 $mon = "N";
                             }
-                            $xmlEndpoint->addChild('ENDPOINT_MONITORED', $mon);
+                            $xmlEndpoint->addChild('ENDPOINT_MONITORED', (string) $mon);
                             //$xmlEndpoint->addChild('CONTACT_EMAIL', $endpoint->getEmail());
                         }
                     }
@@ -493,9 +493,9 @@ class GetDowntime implements IPIQuery {
             //print_r($downtimeArray);
             // <DOWNTIME> element and attributes start
             $xmlDowntime = $xml->addChild('DOWNTIME');
-            $xmlDowntime->addAttribute("ID", $downtimeArray ['id']);
-            $xmlDowntime->addAttribute("PRIMARY_KEY", $downtimeArray ['primaryKey']);
-            $xmlDowntime->addAttribute("CLASSIFICATION", $downtimeArray ['classification']);
+            $xmlDowntime->addAttribute("ID", (string) $downtimeArray ['id']);
+            $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtimeArray ['primaryKey']);
+            $xmlDowntime->addAttribute("CLASSIFICATION", (string) $downtimeArray ['classification']);
             // <DOWNTIME> element and attributes end
 
             $helpers->addIfNotEmpty($xmlDowntime, 'SEVERITY', $downtimeArray ['severity']);
@@ -534,17 +534,17 @@ class GetDowntime implements IPIQuery {
                         // endpoints that are linked to the downtime !)
                         if (in_array($dtEndpoint['id'], $currentServiceEndpointIDs)) {
                             $xmlEndpoint = $xmlEndpoints->addChild('ENDPOINT');
-                            $xmlEndpoint->addChild('ID', $dtEndpoint['id']);
-                            $xmlEndpoint->addChild('NAME', $dtEndpoint['name']);
+                            $xmlEndpoint->addChild('ID', (string) $dtEndpoint['id']);
+                            $xmlEndpoint->addChild('NAME', (string) $dtEndpoint['name']);
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($dtEndpoint['url'], ENT_COMPAT | ENT_HTML401));
-                            $xmlEndpoint->addChild('INTERFACENAME', $dtEndpoint['interfaceName']);
+                            $xmlEndpoint->addChild('URL', htmlspecialchars((string) $dtEndpoint['url'], ENT_COMPAT | ENT_HTML401));
+                            $xmlEndpoint->addChild('INTERFACENAME', (string) $dtEndpoint['interfaceName']);
                             if ($dtEndpoint['monitored']) {
                                 $mon = "Y";
                             } else {
                                 $mon = "N";
                             }
-                            $xmlEndpoint->addChild('ENDPOINT_MONITORED', $mon);
+                            $xmlEndpoint->addChild('ENDPOINT_MONITORED', (string) $mon);
                             //$xmlEndpoint->addChild('CONTACT_EMAIL', $dtEndpoint['email']);
                         }
                     }
@@ -571,9 +571,9 @@ class GetDowntime implements IPIQuery {
             foreach ($downtimeArray ['services'] as $service) {
                 // <DOWNTIME> element and attributes start
                 $xmlDowntime = $xml->addChild('DOWNTIME');
-                $xmlDowntime->addAttribute("ID", $downtimeArray ['id']);
-                $xmlDowntime->addAttribute("PRIMARY_KEY", $downtimeArray ['primaryKey']);
-                $xmlDowntime->addAttribute("CLASSIFICATION", $downtimeArray ['classification']);
+                $xmlDowntime->addAttribute("ID", (string) $downtimeArray ['id']);
+                $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtimeArray ['primaryKey']);
+                $xmlDowntime->addAttribute("CLASSIFICATION", (string) $downtimeArray ['classification']);
                 // <DOWNTIME> element and attributes end
                 // Nested elements
                 $helpers->addIfNotEmpty($xmlDowntime, 'PRIMARY_KEY', $downtimeArray ['primaryKey']);
@@ -607,17 +607,17 @@ class GetDowntime implements IPIQuery {
                         // endpoints that are linked to the downtime !)
                         if (in_array($dtEndpoint['id'], $currentServiceEndpointIDs)) {
                             $xmlEndpoint = $xmlEndpoints->addChild('ENDPOINT');
-                            $xmlEndpoint->addChild('ID', $dtEndpoint['id']);
-                            $xmlEndpoint->addChild('NAME', $dtEndpoint['name']);
+                            $xmlEndpoint->addChild('ID', (string) $dtEndpoint['id']);
+                            $xmlEndpoint->addChild('NAME', (string) $dtEndpoint['name']);
                             // Extensions ?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($dtEndpoint['url'], ENT_COMPAT | ENT_HTML401));
-                            $xmlEndpoint->addChild('INTERFACENAME', $dtEndpoint['interfaceName']);
+                            $xmlEndpoint->addChild('URL', htmlspecialchars((string) $dtEndpoint['url'], ENT_COMPAT | ENT_HTML401));
+                            $xmlEndpoint->addChild('INTERFACENAME', (string) $dtEndpoint['interfaceName']);
                             if ($dtEndpoint['monitored']) {
                                 $mon = "Y";
                             } else {
                                 $mon = "N";
                             }
-                            $xmlEndpoint->addChild('ENDPOINT_MONITORED', $mon);
+                            $xmlEndpoint->addChild('ENDPOINT_MONITORED', (string) $mon);
                             //$xmlEndpoint->addChild('CONTACT_EMAIL', $dtEndpoint['email']);
                         }
                     }

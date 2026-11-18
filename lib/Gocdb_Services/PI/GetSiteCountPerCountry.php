@@ -223,7 +223,7 @@ class GetSiteCountPerCountry implements IPIQuery, IPIQueryRenderable{
         foreach ($output as $country => $count) {
             $xmlSite = $xml->addChild ('SITE');
             $helpers->addIfNotEmpty ($xmlSite, 'COUNTRY', $country);
-            $xmlSite->addChild('COUNT', $count);
+            $xmlSite->addChild('COUNT', (string) $count);
         }
 
         $dom_sxe = dom_import_simplexml ( $xml );

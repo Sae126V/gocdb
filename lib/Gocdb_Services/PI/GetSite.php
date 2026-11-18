@@ -304,29 +304,29 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         $sites = $this->sites;
 
         foreach ($sites as $site) {
             $xmlSite = $xml->addChild('SITE');
-            $xmlSite->addAttribute('ID', $site->getId());
-            $xmlSite->addAttribute('PRIMARY_KEY', $site->getPrimaryKey());
-            $xmlSite->addAttribute('NAME', $site->getShortName());
+            $xmlSite->addAttribute('ID', (string) $site->getId());
+            $xmlSite->addAttribute('PRIMARY_KEY', (string) $site->getPrimaryKey());
+            $xmlSite->addAttribute('NAME', (string) $site->getShortName());
             $helpers->addIfNotEmpty($xmlSite, 'PRIMARY_KEY', $site->getPrimaryKey());
             $helpers->addIfNotEmpty($xmlSite, 'SHORT_NAME', $site->getShortName());
-            $helpers->addIfNotEmpty($xmlSite, 'OFFICIAL_NAME', htmlspecialchars($site->getOfficialName(), ENT_COMPAT | ENT_HTML401));
-            $helpers->addIfNotEmpty($xmlSite, 'SITE_DESCRIPTION', htmlspecialchars($site->getDescription(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addIfNotEmpty($xmlSite, 'OFFICIAL_NAME', htmlspecialchars((string) $site->getOfficialName(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addIfNotEmpty($xmlSite, 'SITE_DESCRIPTION', htmlspecialchars((string) $site->getDescription(), ENT_COMPAT | ENT_HTML401));
             $portalUrl = $this->portalContextUrl.'/index.php?Page_Type=Site&id=' . $site->getId();
             $portalUrl = htmlspecialchars($portalUrl, ENT_COMPAT | ENT_HTML401);
             $helpers->addIfNotEmpty($xmlSite, 'GOCDB_PORTAL_URL', $portalUrl);
-            $helpers->addIfNotEmpty($xmlSite, 'HOME_URL', htmlspecialchars($site->getHomeUrl(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addIfNotEmpty($xmlSite, 'HOME_URL', htmlspecialchars((string) $site->getHomeUrl(), ENT_COMPAT | ENT_HTML401));
             $helpers->addIfNotEmpty($xmlSite, 'CONTACT_EMAIL', $site->getEmail());
             $helpers->addIfNotEmpty($xmlSite, 'CONTACT_TEL', $site->getTelephone());
             $helpers->addIfNotEmpty($xmlSite, 'ALARM_EMAIL', $site->getAlarmEmail());
-            $helpers->addIfNotEmpty($xmlSite, 'GIIS_URL', htmlspecialchars($site->getGiisUrl(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addIfNotEmpty($xmlSite, 'GIIS_URL', htmlspecialchars((string) $site->getGiisUrl(), ENT_COMPAT | ENT_HTML401));
             // Tier is an optional parameter
             if ($site->getTier() != null) {
                 $helpers->addIfNotEmpty($xmlSite, 'TIER', $site->getTier()->getName());
@@ -362,7 +362,7 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $orderedScopes = $this->helpers->orderArrById($site->getScopes());
 
             foreach ($orderedScopes as $scope) {
-               $xmlScope = $xmlScopes->addChild('SCOPE', xssafe($scope->getName()));
+               $xmlScope = $xmlScopes->addChild('SCOPE', (string) xssafe($scope->getName()));
             }
 
             $xmlExtensions = $xmlSite->addChild('EXTENSIONS');
@@ -373,9 +373,9 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             foreach ($orderedSiteProps as $siteProp) {
                 //if ($siteProp != "") {
                     $xmlSiteProperty = $xmlExtensions->addChild('EXTENSION');
-                    $xmlSiteProperty->addChild('LOCAL_ID', $siteProp->getId());
-                    $xmlSiteProperty->addChild('KEY', xssafe($siteProp->getKeyName()));
-                    $xmlSiteProperty->addChild('VALUE', xssafe($siteProp->getKeyValue()));
+                    $xmlSiteProperty->addChild('LOCAL_ID', (string) $siteProp->getId());
+                    $xmlSiteProperty->addChild('KEY', (string) xssafe($siteProp->getKeyName()));
+                    $xmlSiteProperty->addChild('VALUE', (string) xssafe($siteProp->getKeyValue()));
 
                     // If we want support any char in a property, then we will probably
                     // need to support CDATA sections rather than escaping the
@@ -437,15 +437,15 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
         foreach ($sites as $site) {
             $xmlSite = $xml->addChild('AdminDomain');
             $xmlSite->addAttribute('BaseType', 'Domain');
-            $xmlSite->addChild('ID', $site->getId());
-            $xmlSite->addChild('Name', $site->getShortName());
-            $xmlSite->addChild('OtherInfo', $site->getPrimaryKey());
+            $xmlSite->addChild('ID', (string) $site->getId());
+            $xmlSite->addChild('Name', (string) $site->getShortName());
+            $xmlSite->addChild('OtherInfo', (string) $site->getPrimaryKey());
 
             $xmlSiteExtParent = $xmlSite->addChild("Extensions");
 
             $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Short_Name', htmlspecialchars($site->getShortName(), ENT_COMPAT | ENT_HTML401));
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Official_Name', htmlspecialchars($site->getOfficialName(), ENT_COMPAT | ENT_HTML401));
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Site_Description', htmlspecialchars($site->getDescription(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Official_Name', htmlspecialchars((string) $site->getOfficialName(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Site_Description', htmlspecialchars((string) $site->getDescription(), ENT_COMPAT | ENT_HTML401));
 
             $sID = $site->getId();
             if ($sID != "") {
@@ -454,21 +454,21 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
                 $xmlSiteExt->addChild("LocalID", "GOCDB_Portal_URL");
                 $xmlSiteExt->addChild("Key", "GOCDB_Portal_URL");
                 $safeUrl = htmlspecialchars($portalUrl, ENT_COMPAT | ENT_HTML401);
-                $xmlSiteExt->addChild("Value", $safeUrl);
+                $xmlSiteExt->addChild("Value", (string) $safeUrl);
             }
 
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Home_URL', htmlspecialchars($site->getHomeUrl(), ENT_COMPAT | ENT_HTML401));
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Contact_Email', htmlspecialchars($site->getEmail(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Home_URL', htmlspecialchars((string) $site->getHomeUrl(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Contact_Email', htmlspecialchars((string) $site->getEmail(), ENT_COMPAT | ENT_HTML401));
             $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Contact_Tel', $site->getTelephone());
             $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Alarm_Email', $site->getAlarmEmail());
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'GIIS_URL', htmlspecialchars($site->getGiisUrl(), ENT_COMPAT | ENT_HTML401));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'GIIS_URL', htmlspecialchars((string) $site->getGiisUrl(), ENT_COMPAT | ENT_HTML401));
 
 
             if ($site->getTier() != null) {
                 $xmlSiteExt = $xmlSiteExtParent->addChild("Extension");
                 $xmlSiteExt->addChild("LocalID", "Tier");
                 $xmlSiteExt->addChild("Key", "Tier");
-                $xmlSiteExt->addChild("Value", $site->getTier()->getName());
+                $xmlSiteExt->addChild("Value", (string) $site->getTier()->getName());
             }
 
             $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Country_Code', $site->getCountry()->getCode());
@@ -482,7 +482,7 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
                     $xmlSiteExt = $xmlSiteExtParent->addChild("Extension");
                     $xmlSiteExt->addChild("LocalID", "Sub_Grid");
                     $xmlSiteExt->addChild("Key", "Sub_Grid");
-                    $xmlSiteExt->addChild("Value", $subGrid);
+                    $xmlSiteExt->addChild("Value", (string) $subGrid);
                 }
             }
 
@@ -501,7 +501,7 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $orderedServices = $this->helpers->orderArrById($site->getServices());
 
             foreach ($orderedServices as $service) {
-                $xmlNgiAsoc->addChild("ChildDomainID", $service->getID());
+                $xmlNgiAsoc->addChild("ChildDomainID", (string) $service->getID());
             }
         }
 
@@ -531,18 +531,18 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
 
         foreach ($sites as $site) {
             $xmlSite = $xml->addChild('SITE');
-            $xmlSite->addAttribute('ID', $site->getId() /* . "G0" */);
-            $xmlSite->addAttribute('PRIMARY_KEY', $site->getPrimaryKey());
-            $xmlSite->addAttribute('NAME', $site->getShortName());
-            $xmlSite->addAttribute('COUNTRY', $site->getCountry()->getName());
-            $xmlSite->addAttribute('COUNTRY_CODE', $site->getCountry()->getCode());
-            $xmlSite->addAttribute('ROC', $site->getNgi()->getName());
+            $xmlSite->addAttribute('ID', (string) $site->getId() /* . "G0" */);
+            $xmlSite->addAttribute('PRIMARY_KEY', (string) $site->getPrimaryKey());
+            $xmlSite->addAttribute('NAME', (string) $site->getShortName());
+            $xmlSite->addAttribute('COUNTRY', (string) $site->getCountry()->getName());
+            $xmlSite->addAttribute('COUNTRY_CODE', (string) $site->getCountry()->getCode());
+            $xmlSite->addAttribute('ROC', (string) $site->getNgi()->getName());
             $subGrid = $site->getSubGrid();
             if ($subGrid != null) {
                 $subGrid = $subGrid->getName();
             }
-            $xmlSite->addAttribute('SUBGRID', $subGrid);
-            $xmlSite->addAttribute('GIIS_URL', $site->getGiisUrl());
+            $xmlSite->addAttribute('SUBGRID', (string) $subGrid);
+            $xmlSite->addAttribute('GIIS_URL', (string) $site->getGiisUrl());
         }
 
         $dom_sxe = dom_import_simplexml($xml);

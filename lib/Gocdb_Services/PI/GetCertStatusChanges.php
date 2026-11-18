@@ -271,24 +271,24 @@ class GetCertStatusChanges implements IPIQuery, IPIQueryPageable, IPIQueryRender
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         foreach ( $allLogs as $log ) {
             $xmlLog = $xml->addChild ( 'result' );
-            $xmlLog->addAttribute("ID", $log->getId());
+            $xmlLog->addAttribute("ID", (string) $log->getId());
             if ($log->getAddedDate () != null) {
                 // e.g. <TIME>02-JUL-2013 12.51.58</TIME>
-                $xmlLog->addChild ( 'TIME', $log->getAddedDate ()->format ( 'd-M-Y H.i.s' ) );
+                $xmlLog->addChild ( 'TIME', (string) $log->getAddedDate ()->format ( 'd-M-Y H.i.s' ) );
                 // e.g. <UNIX_TIME>1372769518</UNIX_TIME>
-                $xmlLog->addChild ( 'UNIX_TIME', $log->getAddedDate ()->format ( 'U' ) );
+                $xmlLog->addChild ( 'UNIX_TIME', (string) $log->getAddedDate ()->format ( 'U' ) );
             }
-            $xmlLog->addChild ( 'SITE', $log->getParentSite ()->getShortName () );
-            $xmlLog->addChild ( 'OLD_STATUS', $log->getOldStatus () );
-            $xmlLog->addChild ( 'NEW_STATUS', $log->getNewStatus () );
-            $xmlLog->addChild ( 'CHANGED_BY', $log->getAddedBy () );
-            $xmlLog->addChild ( 'COMMENT', xssafe($log->getReason()));
+            $xmlLog->addChild ( 'SITE', (string) $log->getParentSite ()->getShortName () );
+            $xmlLog->addChild ( 'OLD_STATUS', (string) $log->getOldStatus () );
+            $xmlLog->addChild ( 'NEW_STATUS', (string) $log->getNewStatus () );
+            $xmlLog->addChild ( 'CHANGED_BY', (string) $log->getAddedBy () );
+            $xmlLog->addChild ( 'COMMENT', (string) xssafe($log->getReason()));
         }
 
         $dom_sxe = dom_import_simplexml ( $xml );

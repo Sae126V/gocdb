@@ -332,7 +332,7 @@ class GetServiceOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRend
         foreach ($serviceEndpoints as $se) {
             // maybe rename SERVICE_ENDPOINT to SERVICE
             $xmlSe = $xml->addChild('SERVICE_ENDPOINT');
-            $xmlSe->addAttribute("PRIMARY_KEY", $se->getId() . "G0");
+            $xmlSe->addAttribute("PRIMARY_KEY", (string) $se->getId() . "G0");
             $helpers->addIfNotEmpty($xmlSe, 'PRIMARY_KEY', $se->getId() . "G0");
             $helpers->addIfNotEmpty($xmlSe, 'HOSTNAME', $se->getHostName());
             $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Service&id=' . $se->getId(), ENT_COMPAT | ENT_HTML401);
@@ -346,7 +346,7 @@ class GetServiceOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRend
             } else {
                 $beta = "N";
             }
-            $xmlSe->addChild('BETA', $beta);
+            $xmlSe->addChild('BETA', (string) $beta);
 
             $helpers->addIfNotEmpty($xmlSe, 'SERVICE_TYPE', $se->getServiceType()->getName());
             $helpers->addIfNotEmpty($xmlSe, 'HOST_IP', $se->getIpAddress());
@@ -358,43 +358,43 @@ class GetServiceOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRend
             } else {
                 $prod = "N";
             }
-            $xmlSe->addChild('IN_PRODUCTION', $prod);
+            $xmlSe->addChild('IN_PRODUCTION', (string) $prod);
 
             if ($se->getMonitored()) {
                 $mon = "Y";
             } else {
                 $mon = "N";
             }
-            $xmlSe->addChild('NODE_MONITORED', $mon);
+            $xmlSe->addChild('NODE_MONITORED', (string) $mon);
             $site = $se->getParentSite();
             $helpers->addIfNotEmpty($xmlSe, "SITENAME", $site->getShortName());
             $helpers->addIfNotEmpty($xmlSe, "COUNTRY_NAME", $site->getCountry()->getName());
             $helpers->addIfNotEmpty($xmlSe, "COUNTRY_CODE", $site->getCountry()->getCode());
             $helpers->addIfNotEmpty($xmlSe, "ROC_NAME", $site->getNGI()->getName());
-            $xmlSe->addChild("URL", xssafe($se->getUrl()));
+            $xmlSe->addChild("URL", (string) xssafe($se->getUrl()));
 
             if ($this->renderMultipleEndpoints) {
                 $xmlEndpoints = $xmlSe->addChild('ENDPOINTS');
                 foreach ($se->getEndpointLocations() as $endpoint) {
                     $xmlEndpoint = $xmlEndpoints->addChild('ENDPOINT');
-                    $xmlEndpoint->addChild('ID', $endpoint->getId());
-                    $xmlEndpoint->addChild('NAME', xssafe($endpoint->getName()));
+                    $xmlEndpoint->addChild('ID', (string) $endpoint->getId());
+                    $xmlEndpoint->addChild('NAME', (string) xssafe($endpoint->getName()));
                     // Endpoint Extensions
                     $xmlExtensions = $xmlEndpoint->addChild('EXTENSIONS');
                     foreach ($endpoint->getEndpointProperties() as $prop) {
                         $xmlProperty = $xmlExtensions->addChild('EXTENSION');
-                        $xmlProperty->addChild('LOCAL_ID', $prop->getId());
-                        $xmlProperty->addChild('KEY', $prop->getKeyName());
-                        $xmlProperty->addChild('VALUE', $prop->getKeyValue());
+                        $xmlProperty->addChild('LOCAL_ID', (string) $prop->getId());
+                        $xmlProperty->addChild('KEY', (string) $prop->getKeyName());
+                        $xmlProperty->addChild('VALUE', (string) $prop->getKeyValue());
                     }
-                    $xmlEndpoint->addChild('URL', xssafe($endpoint->getUrl()));
-                    $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
+                    $xmlEndpoint->addChild('URL', (string) xssafe($endpoint->getUrl()));
+                    $xmlEndpoint->addChild('INTERFACENAME', (string) $endpoint->getInterfaceName());
                     if ($endpoint->getMonitored()) {
                         $mon = "Y";
                     } else {
                         $mon = "N";
                     }
-                    $xmlEndpoint->addChild('ENDPOINT_MONITORED', $mon);
+                    $xmlEndpoint->addChild('ENDPOINT_MONITORED', (string) $mon);
                     //$xmlEndpoint->addChild('CONTACT_EMAIL', $endpoint->getEmail());
                 }
             }
@@ -402,16 +402,16 @@ class GetServiceOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRend
             // scopes
             $xmlScopes = $xmlSe->addChild('SCOPES');
             foreach($se->getScopes() as $scope){
-               $xmlScopes->addChild('SCOPE', xssafe($scope->getName()));
+               $xmlScopes->addChild('SCOPE', (string) xssafe($scope->getName()));
             }
 
             // Service Extensions
             $xmlExtensions = $xmlSe->addChild('EXTENSIONS');
             foreach ($se->getServiceProperties() as $prop) {
                 $xmlProperty = $xmlExtensions->addChild('EXTENSION');
-                $xmlProperty->addChild('LOCAL_ID', $prop->getId());
-                $xmlProperty->addChild('KEY', xssafe($prop->getKeyName()));
-                $xmlProperty->addChild('VALUE', xssafe($prop->getKeyValue()));
+                $xmlProperty->addChild('LOCAL_ID', (string) $prop->getId());
+                $xmlProperty->addChild('KEY', (string) xssafe($prop->getKeyName()));
+                $xmlProperty->addChild('VALUE', (string) xssafe($prop->getKeyValue()));
             }
         }
 

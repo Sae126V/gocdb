@@ -265,24 +265,24 @@ class GetNGI implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         foreach ($ngis as $ngi) {
             $xmlNgi = $xml->addChild('NGI');
-            $xmlNgi->addAttribute("ID", $ngi->getId());
-            $xmlNgi->addAttribute("NAME", $ngi->getName());
-            $xmlNgi->addChild("PRIMARY_KEY", $ngi->getId());
-            $xmlNgi->addChild("NAME", $ngi->getName());
-            $xmlNgi->addChild("OBJECT_ID", $ngi->getId());
-            $xmlNgi->addChild("DESCRIPTION", xssafe($ngi->getDescription()));
-            $xmlNgi->addChild("EMAIL", $ngi->getEmail());
-            $xmlNgi->addChild("GGUS_SU", $ngi->getGgus_Su());
-            $xmlNgi->addChild("ROD_EMAIL", $ngi->getRodEmail());
-            $xmlNgi->addChild("HELPDESK_EMAIL", $ngi->getHelpdeskEmail());
-            $xmlNgi->addChild("SECURITY_EMAIL", $ngi->getSecurityEmail());
-            $xmlNgi->addChild("SITE_COUNT", count($ngi->getSites()));
+            $xmlNgi->addAttribute("ID", (string) $ngi->getId());
+            $xmlNgi->addAttribute("NAME", (string) $ngi->getName());
+            $xmlNgi->addChild("PRIMARY_KEY", (string) $ngi->getId());
+            $xmlNgi->addChild("NAME", (string) $ngi->getName());
+            $xmlNgi->addChild("OBJECT_ID", (string) $ngi->getId());
+            $xmlNgi->addChild("DESCRIPTION", (string) xssafe($ngi->getDescription()));
+            $xmlNgi->addChild("EMAIL", (string) $ngi->getEmail());
+            $xmlNgi->addChild("GGUS_SU", (string) $ngi->getGgus_Su());
+            $xmlNgi->addChild("ROD_EMAIL", (string) $ngi->getRodEmail());
+            $xmlNgi->addChild("HELPDESK_EMAIL", (string) $ngi->getHelpdeskEmail());
+            $xmlNgi->addChild("SECURITY_EMAIL", (string) $ngi->getSecurityEmail());
+            $xmlNgi->addChild("SITE_COUNT", (string) count($ngi->getSites()));
             // scopes
             $xmlScopes = $xmlNgi->addChild('SCOPES');
 
@@ -290,7 +290,7 @@ class GetNGI implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $orderedScopes = $this->helpers->orderArrById($ngi->getScopes());
 
             foreach ($orderedScopes as $scope) {
-                $xmlScopes->addChild('SCOPE', xssafe($scope->getName()));
+                $xmlScopes->addChild('SCOPE', (string) xssafe($scope->getName()));
             }
         }
 
@@ -319,16 +319,16 @@ class GetNGI implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
 
         foreach ($ngis as $ngi) {
             $xmlNgi = $xml->addChild("AdminDomain");
             $xmlNgi->addAttribute("BaseType", "Domain");
-            $xmlNgi->addChild("ID", $ngi->getId());
-            $xmlNgi->addChild("Name", $ngi->getName());
+            $xmlNgi->addChild("ID", (string) $ngi->getId());
+            $xmlNgi->addChild("Name", (string) $ngi->getName());
 
             $xmlNgiExtParent = $xmlNgi->addChild("Extensions");
 
@@ -340,7 +340,7 @@ class GetNGI implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $helpers->addExtIfNotEmpty($xmlNgiExtParent, 'Security_Email', $ngi->getSecurityEmail());
             $helpers->addExtIfNotEmpty($xmlNgiExtParent, 'Site_Count', count($ngi->getSites()));
 
-            $xmlNgi->addChild("Description", $ngi->getDescription());
+            $xmlNgi->addChild("Description", (string) $ngi->getDescription());
             $xmlNgi->addChild("Distributed", "true");
 
             $xmlNgiAsoc = $xmlNgi->addChild("Associations");
@@ -349,7 +349,7 @@ class GetNGI implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $orderedSites = $this->helpers->orderArrById($ngi->getSites());
 
             foreach ($orderedSites as $site) {
-                $xmlNgiAsoc->addChild("ChildDomainID", $site->getPrimaryKey());
+                $xmlNgiAsoc->addChild("ChildDomainID", (string) $site->getPrimaryKey());
             }
         }
 

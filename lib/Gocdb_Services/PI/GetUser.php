@@ -278,17 +278,17 @@ class GetUser implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
         if ($this->isPaging) {
             $metaXml = $xml->addChild("meta");
             $helpers->addHateoasCursorPagingLinksToMetaElem($metaXml, $this->firstCursorId, $this->lastCursorId, $this->urlAuthority);
-            $metaXml->addChild("count", $this->resultSetSize);
-            $metaXml->addChild("max_page_size", $this->maxResults);
+            $metaXml->addChild("count", (string) $this->resultSetSize);
+            $metaXml->addChild("max_page_size", (string) $this->maxResults);
         }
 
         foreach ($users as $user) {
             $xmlUser = $xml->addChild('EGEE_USER');
-            $xmlUser->addAttribute("ID", $user->getId() . "G0");
-            $xmlUser->addAttribute("PRIMARY_KEY", $user->getId() . "G0");
-            $xmlUser->addChild('FORENAME', $user->getForename());
-            $xmlUser->addChild('SURNAME', $user->getSurname());
-            $xmlUser->addChild('TITLE', $user->getTitle());
+            $xmlUser->addAttribute("ID", (string) $user->getId() . "G0");
+            $xmlUser->addAttribute("PRIMARY_KEY", (string) $user->getId() . "G0");
+            $xmlUser->addChild('FORENAME', (string) $user->getForename());
+            $xmlUser->addChild('SURNAME', (string) $user->getSurname());
+            $xmlUser->addChild('TITLE', (string) $user->getTitle());
             /*
              * Description is always blank in the PROM get_user output so
              * we'll keep it blank in the Doctrine output for compatibility
@@ -296,23 +296,23 @@ class GetUser implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $xmlUser->addChild('DESCRIPTION', "");
             $portalUrl = $this->baseUrl.'/index.php?Page_Type=User&id=' . $user->getId();
             $portalUrl = htmlspecialchars($portalUrl, ENT_COMPAT | ENT_HTML401);
-            $xmlUser->addChild('GOCDB_PORTAL_URL', $portalUrl);
-            $xmlUser->addChild('EMAIL', $user->getEmail());
-            $xmlUser->addChild('TEL', $user->getTelephone());
-            $xmlUser->addChild('WORKING_HOURS_START', $user->getWorkingHoursStart());
-            $xmlUser->addChild('WORKING_HOURS_END', $user->getWorkingHoursEnd());
+            $xmlUser->addChild('GOCDB_PORTAL_URL', (string) $portalUrl);
+            $xmlUser->addChild('EMAIL', (string) $user->getEmail());
+            $xmlUser->addChild('TEL', (string) $user->getTelephone());
+            $xmlUser->addChild('WORKING_HOURS_START', (string) $user->getWorkingHoursStart());
+            $xmlUser->addChild('WORKING_HOURS_END', (string) $user->getWorkingHoursEnd());
 
             if (\Factory::getConfigService()->getAPIAllAuthRealms()) {
-                $xmlUser->addChild('CERTDN', $serv->getIdStringByAuthType($user, 'X.509'));
-                $xmlUser->addChild('EGICHECKIN', $serv->getIdStringByAuthType($user, 'EGI Proxy IdP'));
-                $xmlUser->addChild('IRISIAM', $serv->getIdStringByAuthType($user, 'IRIS IAM - OIDC'));
+                $xmlUser->addChild('CERTDN', (string) $serv->getIdStringByAuthType($user, 'X.509'));
+                $xmlUser->addChild('EGICHECKIN', (string) $serv->getIdStringByAuthType($user, 'EGI Proxy IdP'));
+                $xmlUser->addChild('IRISIAM', (string) $serv->getIdStringByAuthType($user, 'IRIS IAM - OIDC'));
             } else {
-                $xmlUser->addChild('CERTDN', $serv->getDefaultIdString($user));
+                $xmlUser->addChild('CERTDN', (string) $serv->getDefaultIdString($user));
             }
 
             $ssousername = $user->getUsername1();
             if ($ssousername != null) {
-                $xmlUser->addChild('SSOUSERNAME', $ssousername);
+                $xmlUser->addChild('SSOUSERNAME', (string) $ssousername);
             } else {
                 $xmlUser->addChild('SSOUSERNAME');
             }
@@ -327,7 +327,7 @@ class GetUser implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             if ($user->getHomeSite() != null) {
                 $homeSite = $user->getHomeSite()->getShortName();
             }
-            $xmlUser->addChild('HOMESITE', $homeSite);
+            $xmlUser->addChild('HOMESITE', (string) $homeSite);
             /*
              * Add a USER_ROLE element to the XML for each role this user holds.
              */
@@ -338,7 +338,7 @@ class GetUser implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             foreach ($orderedRoles as $role) {
                 if ($role->getStatus() == "STATUS_GRANTED") {
                     $xmlRole = $xmlUser->addChild('USER_ROLE');
-                    $xmlRole->addChild('USER_ROLE', $role->getRoleType()->getName());
+                    $xmlRole->addChild('USER_ROLE', (string) $role->getRoleType()->getName());
 
                     /*
                      * Find out what the owned entity is to get its name and type
@@ -365,11 +365,11 @@ class GetUser implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
                         $entityPk = $ownedEntity->getId() . 'G0';
                     } // note, no subgrids but we are removing subgrids.
 
-                    $xmlRole->addChild('ON_ENTITY', $name);
-                    $xmlRole->addChild('ENTITY_TYPE', $type);
+                    $xmlRole->addChild('ON_ENTITY', (string) $name);
+                    $xmlRole->addChild('ENTITY_TYPE', (string) $type);
                     //$xmlRole->addChild ( 'ID', $ownedEntity->getId() );
                     if ($entityPk != '') {
-                        $xmlRole->addChild('PRIMARY_KEY', $entityPk);
+                        $xmlRole->addChild('PRIMARY_KEY', (string) $entityPk);
                     }
 
                     // Show which projects recognise the role
@@ -381,8 +381,8 @@ class GetUser implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
                     $orderedProjects = $this->helpers->orderArrById(new ArrayCollection($parentProjectsForRole));
 
                     foreach ($orderedProjects as $_proj) {
-                       $xmlProj = $xmlProjects->addChild('PROJECT', $_proj->getName());
-                       $xmlProj->addAttribute('ID', $_proj->getId());
+                       $xmlProj = $xmlProjects->addChild('PROJECT', (string) $_proj->getName());
+                       $xmlProj->addAttribute('ID', (string) $_proj->getId());
                     }
 
 
