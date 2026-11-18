@@ -1,7 +1,7 @@
 <?php
 $name = xssafe($params['Name']);
 $description = xssafe($params['Description']);
-$allowMonitoringException = xssafe($params['AllowMonitoringExtension']);
+$allowMonitoringException = xssafe($params['AllowMonitoringException']);
 $id = $params['ID'];
 $services = $params['Services'];
 $SEsCount = sizeof($services);
