@@ -113,7 +113,7 @@ function getDowntimesAsJSON()
         $tempDowntime = array();
         $tempDowntime['id'] = $dt['id'];
         $tempDowntime['site'] = $dtServ->getDowntime($tempDowntime['id'])->getServices()->first()->getParentSite()->getName();
-        $tempDowntime['title'] = "<b>" . $tempDowntime['site'] . "</b>" . ": " . utf8_encode($dt['description']);
+        $tempDowntime['title'] = "<b>" . $tempDowntime['site'] . "</b>" . ": " . mb_convert_encoding($dt['description'], 'UTF-8', 'ISO-8859-1');
         $tempDowntime['start'] = $dt['startDate']->format('c');
         $tempDowntime['end'] = $dt['endDate']->format('c');
         $tempDowntime['severity'] = $dt['severity'];
