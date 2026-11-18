@@ -2479,7 +2479,7 @@ class ServiceService extends AbstractEntityService
     {
         $configService = new Config();
         $minumNumberOfScopes = $configService->getMinimumScopesRequired('service');
-        if (sizeof($scopeIds) < $minumNumberOfScopes) {
+        if (sizeof((array) $scopeIds) < $minumNumberOfScopes) {
             throw new \Exception("A service must have at least " . $minumNumberOfScopes .
                                  " optional scope(s)  assigned to it.");
         }

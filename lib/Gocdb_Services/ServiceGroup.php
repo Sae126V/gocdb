@@ -549,7 +549,7 @@ class ServiceGroup extends AbstractEntityService{
         require_once __DIR__ . '/Config.php';
         $configService = new \org\gocdb\services\Config();
         $minumNumberOfScopes = $configService->getMinimumScopesRequired('service_group');
-        if(sizeof($scopeIds)<$minumNumberOfScopes){
+        if(sizeof((array) $scopeIds)<$minumNumberOfScopes){
             throw new \Exception("A service group must have at least " . $minumNumberOfScopes . " scope(s) assigned to it.");
         }
     }
