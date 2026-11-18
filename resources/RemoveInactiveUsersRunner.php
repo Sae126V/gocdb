@@ -19,7 +19,7 @@ $options = getopt("", $longOptions);
 // Handle the cases where options were not passed.
 
 if (isset($options["warning_threshold"])) {
-    $warningThreshold = $options["warning_threshold"];
+    $warningThreshold = (float) $options["warning_threshold"];
 } else {
     echo "Error: warning_threshold option must be set.\n";
     usage();
@@ -27,7 +27,7 @@ if (isset($options["warning_threshold"])) {
 };
 
 if (isset($options["deletion_threshold"])) {
-    $deletionThreshold = $options["deletion_threshold"];
+    $deletionThreshold = (float) $options["deletion_threshold"];
 } else {
     echo "Error: deletion_threshold option must be set.\n";
     usage();

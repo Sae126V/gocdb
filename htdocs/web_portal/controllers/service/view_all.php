@@ -26,7 +26,7 @@ function drawSEs(){
 
     $startRecord = 1;
     if(isset($_GET['record'])) {
-       $startRecord = $_GET['record'];
+       $startRecord = (int) $_GET['record'];
     }
     $searchTerm = "";
     if(!empty($_GET['searchTerm'])) {
