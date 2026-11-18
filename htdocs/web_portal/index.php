@@ -695,13 +695,14 @@ function Get_Static_Page_Contents($Page_Name) {
 
 /* Returns the contents of a specified directory name */
 function Get_Directory_Contents($Directory_Name) {
+    $File_List = array();
     if ($File_Handle = opendir($Directory_Name))
     {
         while (false !== ($Filename = readdir($File_Handle)))
         $File_List[$Filename] = true;
+        closedir($File_Handle);
     }
 
-    closedir($File_Handle);
     return $File_List;
 }
 

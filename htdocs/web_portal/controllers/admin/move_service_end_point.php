@@ -115,6 +115,7 @@ function getSEPMoveDataFromWeb() {
     // Fields that are used to link other objects to the site
     $fields = array('OldSite', 'NewSite', 'Services');
 
+    $SEP_move_data = array();
     foreach($fields as $field) {
         if(array_key_exists($field,$_REQUEST)){
             $SEP_move_data[$field] = $_REQUEST[$field];

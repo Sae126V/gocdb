@@ -6,6 +6,10 @@ $startDate = $downtime->getStartDate();
 $endDate = $downtime->getEndDate();
 $severity = $downtime->getSeverity();
 
+$affectedSites = array();
+$affectedServices = array();
+$affectedEndpoints = array();
+
 foreach($downtime->getServices() as $service){
     $affectedSites[] = $service->getParentSite();
     $affectedServices[] = $service;

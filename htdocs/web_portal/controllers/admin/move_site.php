@@ -112,6 +112,7 @@ function getSiteMoveDataFromWeb() {
     // Fields that are used to link other objects to the site
     $fields = array('OldNGI', 'NewNGI', 'Sites');
 
+    $site_move_data = array();
     foreach($fields as $field) {
         if(array_key_exists($field,$_REQUEST)){
             $site_move_data[$field] = $_REQUEST[$field];
