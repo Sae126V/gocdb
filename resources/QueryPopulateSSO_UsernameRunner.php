@@ -72,5 +72,5 @@ $em->flush();
 echo "Completed ok: ".date('D, d M Y H:i:s');
 
 function cleanDN($dn) {
-    return trim(str_replace(' ', '%20', $dn));
+    return trim(str_replace(' ', '%20', (string) $dn));
 }

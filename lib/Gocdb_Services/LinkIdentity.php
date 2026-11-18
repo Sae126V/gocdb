@@ -101,7 +101,7 @@ class LinkIdentity extends AbstractEntityService {
         $this->checkPortalIsNotReadOnlyOrUserIsAdmin($currentUser);
 
         // Check the given email address matches the one given
-        if (strcasecmp($primaryUser->getEmail(), $givenEmail)) {
+        if (strcasecmp((string) $primaryUser->getEmail(), (string) $givenEmail)) {
             // Don't throw exception to limit info shared
             return 1;
         }
@@ -313,7 +313,7 @@ class LinkIdentity extends AbstractEntityService {
         $headers = "From: GOCDB <" . $emailSentFrom . ">";
 
         // Mail command returns boolean. False if message not accepted for delivery.
-        if (!mail($primaryUser->getEmail(), $primarySubject, $primaryBody, $headers)) {
+        if (!mail((string) $primaryUser->getEmail(), $primarySubject, $primaryBody, $headers)) {
             throw new \Exception("Unable to send email message");
         }
 
@@ -328,7 +328,7 @@ class LinkIdentity extends AbstractEntityService {
                 $currentBody = $composedCurrentEmail['body'];
 
                 // Mail command returns boolean. False if message not accepted for delivery.
-                if (!mail($currentUser->getEmail(), $currentSubject, $currentBody, $headers)) {
+                if (!mail((string) $currentUser->getEmail(), $currentSubject, $currentBody, $headers)) {
                     throw new \Exception("Unable to send email message");
                 }
             }

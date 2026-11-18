@@ -72,7 +72,7 @@ class Validate
             return true;
         }
 
-        if (!preg_match($regEx, $fieldValue)) {
+        if (!preg_match($regEx, (string) $fieldValue)) {
             return false;
         }
 
@@ -88,7 +88,7 @@ class Validate
         $length = $this->getFieldValue($objectName, $fieldName, 'length');
 
         if (!count($length) == 0) { //only check length if the schema has a length specified in it
-            if (strlen($fieldValue) > $length or $length == 0) {
+            if (strlen((string) $fieldValue) > $length or $length == 0) {
                 throw new \Exception($fieldName . " may not be more than " . $length . " chracters in length");
             }
         }
