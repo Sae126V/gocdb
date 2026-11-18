@@ -86,7 +86,7 @@ class RoleActionMappingService /* extends AbstractEntityService */ {
             $this->loadRoleActionsXmlFile();
         } catch (\LogicException $e) {
             // Trap the schema validation error and return the error stack.
-            if ($e->getCode() == $this->FAILED_TO_READ_XML_SCHEMA) {
+            if ($e->getCode() == self::FAILED_TO_READ_XML_SCHEMA) {
                 return libxml_get_errors();
             }
             throw $e;
@@ -104,7 +104,7 @@ class RoleActionMappingService /* extends AbstractEntityService */ {
 
         if (!$dom->schemaValidate($xsdDocPath)) {
             throw new \LogicException("Failed validate RoleActionMappings against schema. xml:[{$xmlDocPath}] xsd:[{$xsdDocPath}]",
-                        $this->FAILED_TO_READ_XML_SCHEMA);
+                        self::FAILED_TO_READ_XML_SCHEMA);
         }
     }
     /**
@@ -121,7 +121,7 @@ class RoleActionMappingService /* extends AbstractEntityService */ {
 
         if (!$dom->load($xmlDocPath)) {
             throw new \LogicException("Failed to load RoleActionMappings. xml:[{$xmlDocPath}]",
-                            $this->FAILED_TO_READ_XML_DATA);
+                            self::FAILED_TO_READ_XML_DATA);
         }
         return $dom;
     }
