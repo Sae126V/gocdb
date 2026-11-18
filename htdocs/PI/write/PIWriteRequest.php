@@ -139,7 +139,7 @@ class PIWriteRequest {
       }
 
       #Return the error as the return object
-      $errorArray['Error']= array('Code' => $this->httpResponseCode, 'Message' => utf8_encode($message), 'API-Documentation'=>$this->docsURL);
+      $errorArray['Error']= array('Code' => $this->httpResponseCode, 'Message' => mb_convert_encoding($message, 'UTF-8', 'ISO-8859-1'), 'API-Documentation'=>$this->docsURL);
       $this->returnObject = $errorArray;
     }
 
