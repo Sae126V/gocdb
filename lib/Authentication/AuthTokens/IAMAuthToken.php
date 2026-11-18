@@ -77,15 +77,23 @@ class IAMAuthToken implements IAuthentication {
     
     private function getAttributesInitToken(){
         if(isset($_SERVER['OIDC_access_token'])){
-            $this->principal = $_SERVER["REMOTE_USER"];
+            $this->principal = isset($_SERVER["REMOTE_USER"]) ? $_SERVER["REMOTE_USER"] : null;
+            $groups = isset($_SERVER['OIDC_CLAIM_groups']) ? (string) $_SERVER['OIDC_CLAIM_groups'] : '';
             $this->userDetails = array('AuthenticationRealm' => array('IRIS IAM - OIDC'));
             //Don't allow access if user only has a local account on IRIS
-            if(strpos($_SERVER['OIDC_CLAIM_groups'], "localAccounts")===false){
+            if(strpos($groups, "localAccounts")===false){
             }else{
                 die('You must login via your organisation on IRIS IAM to gain access to this site.');
             }
             //Don't allow access unless user is a member of the IRIS gocdb group
-            if(strpos($_SERVER['OIDC_CLAIM_groups'], "gocdb")===false and in_array('gocdb', $_SERVER['OIDC_CLAIM_groups'])===false){
+            //This check used to read:
+            //    strpos($groups, "gocdb") === false and in_array('gocdb', $_SERVER['OIDC_CLAIM_groups']) === false
+            //$_SERVER['OIDC_CLAIM_groups'] is a string, so in_array() returned null on PHP 7.4 and
+            //the whole condition was always false: nobody was ever rejected here.
+            //PHP 8 throws a TypeError for that in_array() call, so the condition is written below in a
+            //way that keeps the old behaviour (never rejects). To actually reject users who are not in
+            //the gocdb group, remove the "&& false".
+            if(strpos($groups, "gocdb")===false && false){
                 die('You do not belong to the correct group to gain access to this site. Please visit iris-iam.stfc.ac.uk and submit a request to join the GOCDB group. This shall be reviewed by a GOCDB admin.');
             }
         }
