@@ -34,6 +34,8 @@ use org\gocdb\services\Site;
 
 class RoleServiceTest2 extends \PHPUnit\Framework\TestCase
 {
+    private $util;
+    private $roleServ;
     private $entityManager;
     private $user;
     private $site;

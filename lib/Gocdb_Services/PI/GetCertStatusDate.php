@@ -54,6 +54,7 @@ class GetCertStatusDate implements IPIQuery, IPIQueryPageable, IPIQueryRenderabl
     private $resultSetSize=0; // used to build the <count> HATEOAS link
     private $lastCursorId=null;  // Used to build the <next> page HATEOAS link
     private $firstCursorId=null; // Used to build the <prev> page HATEOAS link
+    private $urlAuthority;
 
     /** Constructor takes entity manager which is then used by the
      *  query builder
