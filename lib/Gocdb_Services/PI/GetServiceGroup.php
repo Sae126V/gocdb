@@ -294,7 +294,7 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
             $xmlSg->addAttribute("ID", $sg->getId());
             $xmlSg->addAttribute("PRIMARY_KEY", $sg->getId() . "G0");
             $xmlSg->addChild('NAME', $sg->getName());
-            $xmlSg->addChild('DESCRIPTION', htmlspecialchars($sg->getDescription(), ENT_COMPAT));
+            $xmlSg->addChild('DESCRIPTION', htmlspecialchars((string) $sg->getDescription(), ENT_COMPAT));
             $mon = ($sg->getMonitored()) ? 'Y' : 'N';
             $xmlSg->addChild('MONITORED', $mon);
             $xmlSg->addChild('CONTACT_EMAIL', $sg->getEmail());
@@ -330,7 +330,7 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
                     foreach ($orderedEndpoints as $endpoint) {
                         $xmlEndpoint = $xmlEndpoints->addChild('ENDPOINT');
                         $xmlEndpoint->addChild('ID', $endpoint->getId());
-                        $xmlEndpoint->addChild('NAME', htmlspecialchars($endpoint->getName(), ENT_COMPAT));
+                        $xmlEndpoint->addChild('NAME', htmlspecialchars((string) $endpoint->getName(), ENT_COMPAT));
                         // Endpoint Extensions
                         $xmlEndpointExtensions = $xmlEndpoint->addChild('EXTENSIONS');
 
@@ -343,7 +343,7 @@ class GetServiceGroup implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
                             $xmlProperty->addChild('KEY', xssafe($prop->getKeyName()));
                             $xmlProperty->addChild('VALUE', xssafe($prop->getKeyValue()));
                         }
-                        $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT));
+                        $xmlEndpoint->addChild('URL', htmlspecialchars((string) $endpoint->getUrl(), ENT_COMPAT));
                         $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
                         if ($endpoint->getMonitored()) {
                             $mon = "Y";

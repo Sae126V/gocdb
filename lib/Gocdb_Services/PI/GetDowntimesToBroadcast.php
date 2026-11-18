@@ -332,7 +332,7 @@ class GetDowntimeToBroadcast implements IPIQuery, IPIQueryPageable, IPIQueryRend
                 $xmlDowntime = $xml->addChild('DOWNTIME');
                 $xmlDowntime->addAttribute("ID", $downtime->getId());
                 // Note, we are preserving the v4 primary keys here.
-                $xmlDowntime->addAttribute("PRIMARY_KEY", $downtime->getPrimaryKey());
+                $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtime->getPrimaryKey());
 
                 $xmlDowntime->addAttribute("CLASSIFICATION", $downtime->getClassification());
                 $xmlDowntime->addChild("PRIMARY_KEY", $downtime->getPrimaryKey());
@@ -354,7 +354,7 @@ class GetDowntimeToBroadcast implements IPIQuery, IPIQueryPageable, IPIQueryRend
                         $xmlEndpoint->addChild ( 'ID', $endpoint->getId());
                         $xmlEndpoint->addChild ( 'NAME', $endpoint->getName());
                         // Extensions?
-                        $xmlEndpoint->addChild ( 'URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT));
+                        $xmlEndpoint->addChild ( 'URL', htmlspecialchars((string) $endpoint->getUrl(), ENT_COMPAT));
                         $xmlEndpoint->addChild ( 'INTERFACENAME', $endpoint->getInterfaceName());
                         if ($endpoint->getMonitored()) {
                             $mon = "Y";

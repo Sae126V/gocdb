@@ -586,7 +586,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
             // ID is the internal object id/sequence
             $xmlDowntime->addAttribute("ID", $downtime->getId());
             // Note, we are preserving the v4 primary keys here.
-            $xmlDowntime->addAttribute("PRIMARY_KEY", $downtime->getPrimaryKey());
+            $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtime->getPrimaryKey());
             $xmlDowntime->addAttribute("CLASSIFICATION", $downtime->getClassification());
 
             $helpers->addIfNotEmpty($xmlDowntime, 'SEVERITY', $downtime->getSeverity());
@@ -618,7 +618,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                             $xmlEndpoint->addChild('ID', $endpoint->getId());
                             $xmlEndpoint->addChild('NAME', $endpoint->getName());
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT));
+                            $xmlEndpoint->addChild('URL', htmlspecialchars((string) $endpoint->getUrl(), ENT_COMPAT));
                             $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
                             if ($endpoint->getMonitored()) {
                                 $mon = "Y";
@@ -664,7 +664,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                 $xmlDowntime = $xml->addChild('DOWNTIME');
                 // ID is the internal object id/sequence
                 $xmlDowntime->addAttribute("ID", $downtime->getId());
-                $xmlDowntime->addAttribute("PRIMARY_KEY", $downtime->getPrimaryKey());
+                $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtime->getPrimaryKey());
                 $xmlDowntime->addAttribute("CLASSIFICATION", $downtime->getClassification());
                 $helpers->addIfNotEmpty($xmlDowntime, 'PRIMARY_KEY', $downtime->getPrimaryKey());
                 $helpers->addIfNotEmpty($xmlDowntime, 'HOSTNAME', $service->getHostName());
@@ -685,7 +685,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                             $xmlEndpoint->addChild('ID', $endpoint->getId());
                             $xmlEndpoint->addChild('NAME', $endpoint->getName());
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT));
+                            $xmlEndpoint->addChild('URL', htmlspecialchars((string) $endpoint->getUrl(), ENT_COMPAT));
                             $xmlEndpoint->addChild('INTERFACENAME', $endpoint->getInterfaceName());
                             if ($endpoint->getMonitored()) {
                                 $mon = "Y";
@@ -727,7 +727,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
             // <DOWNTIME> element and attributes start
             $xmlDowntime = $xml->addChild('DOWNTIME');
             $xmlDowntime->addAttribute("ID", $downtimeArray ['id']);
-            $xmlDowntime->addAttribute("PRIMARY_KEY", $downtimeArray ['primaryKey']);
+            $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtimeArray ['primaryKey']);
             $xmlDowntime->addAttribute("CLASSIFICATION", $downtimeArray ['classification']);
             // <DOWNTIME> element and attributes end
 
@@ -770,7 +770,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                             $xmlEndpoint->addChild('ID', $dtEndpoint['id']);
                             $xmlEndpoint->addChild('NAME', $dtEndpoint['name']);
                             // Extensions?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($dtEndpoint['url'], ENT_COMPAT));
+                            $xmlEndpoint->addChild('URL', htmlspecialchars((string) $dtEndpoint['url'], ENT_COMPAT));
                             $xmlEndpoint->addChild('INTERFACENAME', $dtEndpoint['interfaceName']);
                             if ($dtEndpoint['monitored']) {
                                 $mon = "Y";
@@ -806,7 +806,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                 // <DOWNTIME> element and attributes start
                 $xmlDowntime = $xml->addChild('DOWNTIME');
                 $xmlDowntime->addAttribute("ID", $downtimeArray ['id']);
-                $xmlDowntime->addAttribute("PRIMARY_KEY", $downtimeArray ['primaryKey']);
+                $xmlDowntime->addAttribute("PRIMARY_KEY", (string) $downtimeArray ['primaryKey']);
                 $xmlDowntime->addAttribute("CLASSIFICATION", $downtimeArray ['classification']);
                 // <DOWNTIME> element and attributes end
                 // Nested elements
@@ -844,7 +844,7 @@ class GetDowntimeOffsetPaging implements IPIQuery, IPIQueryPageable, IPIQueryRen
                             $xmlEndpoint->addChild('ID', $dtEndpoint['id']);
                             $xmlEndpoint->addChild('NAME', $dtEndpoint['name']);
                             // Extensions ?
-                            $xmlEndpoint->addChild('URL', htmlspecialchars($dtEndpoint['url'], ENT_COMPAT));
+                            $xmlEndpoint->addChild('URL', htmlspecialchars((string) $dtEndpoint['url'], ENT_COMPAT));
                             $xmlEndpoint->addChild('INTERFACENAME', $dtEndpoint['interfaceName']);
                             if ($dtEndpoint['monitored']) {
                                 $mon = "Y";

@@ -281,7 +281,7 @@ class GetServiceGroupRole implements IPIQuery, IPIQueryPageable, IPIQueryRendera
             $xmlSg->addAttribute ( "ID", $sg->getId ());
             $xmlSg->addAttribute ( "PRIMARY_KEY", $sg->getId () . "G0" );
             $xmlSg->addChild ( 'NAME', $sg->getName () );
-            $xmlSg->addChild ( 'DESCRIPTION', htmlspecialchars ( $sg->getDescription (), ENT_COMPAT ) );
+            $xmlSg->addChild ( 'DESCRIPTION', htmlspecialchars ( (string) $sg->getDescription (), ENT_COMPAT ) );
             $mon = ($sg->getMonitored ()) ? 'Y' : 'N';
             $xmlSg->addChild ( 'MONITORED', $mon );
             $xmlSg->addChild ( 'CONTACT_EMAIL', $sg->getEmail () );

@@ -289,7 +289,7 @@ class GetSiteContacts implements IPIQuery, IPIQueryPageable, IPIQueryRenderable 
         foreach ( $sites as $site ) {
             $xmlSite = $xml->addChild ( 'SITE' );
             $xmlSite->addAttribute ( 'ID', $site->getId () . "G0" );
-            $xmlSite->addAttribute ( 'PRIMARY_KEY', $site->getPrimaryKey () );
+            $xmlSite->addAttribute ( 'PRIMARY_KEY', (string) $site->getPrimaryKey () );
             $xmlSite->addAttribute ( 'NAME', $site->getShortName () );
 
             $xmlSite->addChild ( 'PRIMARY_KEY', $site->getPrimaryKey () );
