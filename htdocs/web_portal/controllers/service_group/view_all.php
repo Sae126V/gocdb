@@ -34,9 +34,10 @@ function showAllServiceGroups(){
 
     $selectedScopes = array();
 
+    $scopeStringParam = '';
     if (!empty($_GET['mscope'])) {
-        $scopeStringParam = '';
-        foreach (array_values($_GET['mscope']) as $scopeVal) {
+        $mscope = is_array($_GET['mscope']) ? array_values($_GET['mscope']) : array();
+        foreach ($mscope as $scopeVal) {
             $scopeStringParam .= $scopeVal . ',';
             $selectedScopes[] = $scopeVal;
         }

@@ -90,7 +90,7 @@ function submit() {
 
     //Get the posted service type data
     $projectId =$_REQUEST['ID'];
-    $ngiIds = $_REQUEST['NGIs'];
+    $ngiIds = (isset($_REQUEST['NGIs']) && is_array($_REQUEST['NGIs'])) ? $_REQUEST['NGIs'] : array();
 
     //turn ngiIds into NGIs
     $ngis = new Doctrine\Common\Collections\ArrayCollection;

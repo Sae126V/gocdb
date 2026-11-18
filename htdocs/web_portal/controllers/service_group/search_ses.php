@@ -25,7 +25,7 @@ use Doctrine\Common\Cache\ArrayCache;
  /*====================================================== */
 
 function search_ses() {
-    if(!isset($_REQUEST['term'])) {
+    if(!isset($_REQUEST['term']) || !is_string($_REQUEST['term'])) {
         return "";
     }else{
         $searchTerm = strip_tags(trim($_REQUEST['term']));

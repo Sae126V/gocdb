@@ -33,6 +33,9 @@ function search() {
     }
 
     $searchTerm = isset($_POST['SearchString']) ? $_POST['SearchString'] : '';
+    if (!is_string($searchTerm)) {
+        $searchTerm = '';
+    }
 
     //strip leading and trailing whitespace off search term
     $searchTerm = strip_tags(trim($searchTerm));
