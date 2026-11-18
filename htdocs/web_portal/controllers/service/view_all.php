@@ -53,7 +53,7 @@ function drawSEs(){
     $selectedScopes = array();
     $scope = '';
     if(!empty($_GET['mscope'])) {
-        foreach($_GET['mscope'] as $key => $scopeVal){
+        foreach((is_array($_GET['mscope']) ? $_GET['mscope'] : array()) as $key => $scopeVal){
             $scope .= $scopeVal.',';
             $selectedScopes[] = $scopeVal;
         }

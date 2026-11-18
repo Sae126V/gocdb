@@ -84,7 +84,7 @@ function showAllSites(){
     $selectedScopes = array();
     if(!empty($_GET['mscope'])) {
         $scopeStringParam = '';
-        foreach($_GET['mscope'] as $key => $scopeVal){
+        foreach((is_array($_GET['mscope']) ? $_GET['mscope'] : array()) as $key => $scopeVal){
             $scopeStringParam .= $scopeVal.',';
             $selectedScopes[] = $scopeVal;
         }
