@@ -278,7 +278,7 @@ function getSiteDataFromWeb()
 
     $siteData = [];
     foreach ($fields as $field) {
-        $siteData[$field] = $_REQUEST [$field];
+        $siteData[$field] = $_REQUEST [$field] ?? null;
     }
 
     if (isset($_REQUEST['childServiceScopeAction'])) {
@@ -339,11 +339,11 @@ function getSiteDataFromWeb()
     );
 
     foreach ($siteObjectFields as $field) {
-        $siteData ['Site'] [$field] = trim($_REQUEST [$field]);
+        $siteData ['Site'] [$field] = trim($_REQUEST [$field] ?? '');
     }
 
     //Notifcations
-    $siteData ['NOTIFY'] = $_REQUEST ['NOTIFY'];
+    $siteData ['NOTIFY'] = $_REQUEST ['NOTIFY'] ?? null;
 
     /*
      * If the user is updating a site the optional cobjectid parameter will be set.
@@ -383,9 +383,9 @@ function getSGroupDataFromWeb()
         $sGroup['ID'] = $_REQUEST ['objectId'];
     }
 
-    $sGroup['SERVICEGROUP'] ['NAME'] = trim($_REQUEST ['name']);
-    $sGroup['SERVICEGROUP'] ['DESCRIPTION'] = trim($_REQUEST ['description']);
-    $sGroup['SERVICEGROUP'] ['EMAIL'] = trim($_REQUEST ['email']);
+    $sGroup['SERVICEGROUP'] ['NAME'] = trim($_REQUEST ['name'] ?? '');
+    $sGroup['SERVICEGROUP'] ['DESCRIPTION'] = trim($_REQUEST ['description'] ?? '');
+    $sGroup['SERVICEGROUP'] ['EMAIL'] = trim($_REQUEST ['email'] ?? '');
 
     // get scopes if any are selected, if not set as null
     if (isset($_REQUEST ['Scope_ids'])) {
@@ -421,7 +421,7 @@ function getSeDataFromWeb()
     );
     $seData = [];
     foreach ($fields as $field) {
-        $seData [$field] = $_REQUEST [$field];
+        $seData [$field] = $_REQUEST [$field] ?? null;
     }
 
     /*
@@ -433,16 +433,16 @@ function getSeDataFromWeb()
     }
 
     // $seData['SE']['ENDPOINT'] = $_REQUEST['HOSTNAME'] . $_REQUEST['serviceType'];
-    $seData ['SE'] ['HOSTNAME'] = trim($_REQUEST ['HOSTNAME']);
-    $seData ['SE'] ['HOST_IP'] = trim($_REQUEST ['HOST_IP']);
-    $seData ['SE'] ['HOST_IP_V6'] = trim($_REQUEST['HOST_IP_V6']);
-    $seData ['SE'] ['HOST_DN'] = trim($_REQUEST ['HOST_DN']);
-    $seData ['SE'] ['DESCRIPTION'] = trim($_REQUEST ['DESCRIPTION']);
-    $seData ['SE'] ['HOST_OS'] = trim($_REQUEST ['HOST_OS']);
-    $seData ['SE'] ['HOST_ARCH'] = trim($_REQUEST ['HOST_ARCH']);
-    $seData ['SE'] ['EMAIL'] = trim($_REQUEST ['EMAIL']);
-    $seData ['SE'] ['URL'] = trim($_REQUEST ['endpointUrl']);
-    $seData ['BETA'] = $_REQUEST ['HOST_BETA'];
+    $seData ['SE'] ['HOSTNAME'] = trim($_REQUEST ['HOSTNAME'] ?? '');
+    $seData ['SE'] ['HOST_IP'] = trim($_REQUEST ['HOST_IP'] ?? '');
+    $seData ['SE'] ['HOST_IP_V6'] = trim($_REQUEST['HOST_IP_V6'] ?? '');
+    $seData ['SE'] ['HOST_DN'] = trim($_REQUEST ['HOST_DN'] ?? '');
+    $seData ['SE'] ['DESCRIPTION'] = trim($_REQUEST ['DESCRIPTION'] ?? '');
+    $seData ['SE'] ['HOST_OS'] = trim($_REQUEST ['HOST_OS'] ?? '');
+    $seData ['SE'] ['HOST_ARCH'] = trim($_REQUEST ['HOST_ARCH'] ?? '');
+    $seData ['SE'] ['EMAIL'] = trim($_REQUEST ['EMAIL'] ?? '');
+    $seData ['SE'] ['URL'] = trim($_REQUEST ['endpointUrl'] ?? '');
+    $seData ['BETA'] = $_REQUEST ['HOST_BETA'] ?? null;
 
     /*
     * If the user is updating a service the optional cobjectid parameter will be set.
@@ -487,7 +487,7 @@ function getProjectDataFromWeb()
     );
 
     foreach ($fields as $field) {
-        $projectValues [$field] = trim($_REQUEST [$field]);
+        $projectValues [$field] = trim($_REQUEST [$field] ?? '');
     }
     return $projectValues;
 }
@@ -503,7 +503,7 @@ function getNGIDataFromWeb()
     );
     $ngiValues = [];
     foreach ($fields as $field) {
-        $ngiValues [$field] = trim($_REQUEST [$field]);
+        $ngiValues [$field] = trim($_REQUEST [$field] ?? '');
     }
 
     if (isset($_REQUEST ['NAME'])) {
@@ -555,10 +555,10 @@ function getNGIDataFromWeb()
 function getDtDataFromWeb()
 {
     $downTime = [];
-    $downTime['DOWNTIME'] ['SEVERITY'] = $_REQUEST ['SEVERITY'];
-    $downTime['DOWNTIME'] ['DESCRIPTION'] = trim($_REQUEST ['DESCRIPTION']);
-    $downTime['DOWNTIME'] ['START_TIMESTAMP'] = $_REQUEST ['START_TIMESTAMP'];
-    $downTime['DOWNTIME'] ['END_TIMESTAMP'] = $_REQUEST ['END_TIMESTAMP'];
+    $downTime['DOWNTIME'] ['SEVERITY'] = $_REQUEST ['SEVERITY'] ?? null;
+    $downTime['DOWNTIME'] ['DESCRIPTION'] = trim($_REQUEST ['DESCRIPTION'] ?? '');
+    $downTime['DOWNTIME'] ['START_TIMESTAMP'] = $_REQUEST ['START_TIMESTAMP'] ?? null;
+    $downTime['DOWNTIME'] ['END_TIMESTAMP'] = $_REQUEST ['END_TIMESTAMP'] ?? null;
 
     $downTime['DOWNTIME'] ['DEFINE_TZ_BY_UTC_OR_SITE'] = 'utc'; //default
     if (isset($_REQUEST ['DEFINE_TZ_BY_UTC_OR_SITE'])) {
@@ -585,9 +585,9 @@ function getDtDataFromWeb()
 function getSpDataFromWeb()
 {
     $siteProp = [];
-    $siteProp['SITEPROPERTIES'] ['SITE'] = $_REQUEST ['SITE'];
-    $siteProp['SITEPROPERTIES'] ['NAME'] = $_REQUEST ['KEYPAIRNAME'];
-    $siteProp['SITEPROPERTIES'] ['VALUE'] = $_REQUEST ['KEYPAIRVALUE'];
+    $siteProp['SITEPROPERTIES'] ['SITE'] = $_REQUEST ['SITE'] ?? null;
+    $siteProp['SITEPROPERTIES'] ['NAME'] = $_REQUEST ['KEYPAIRNAME'] ?? null;
+    $siteProp['SITEPROPERTIES'] ['VALUE'] = $_REQUEST ['KEYPAIRVALUE'] ?? null;
     if (isset($_REQUEST ['PROP'])) {
         $siteProp['SITEPROPERTIES'] ['PROP'] = $_REQUEST ['PROP'];
     }
@@ -607,9 +607,9 @@ function getSpDataFromWeb()
 function getSerPropDataFromWeb()
 {
     $serviceProp = [];
-    $serviceProp['SERVICEPROPERTIES'] ['SERVICE'] = $_REQUEST ['SERVICE'];
-    $serviceProp['SERVICEPROPERTIES'] ['NAME'] = $_REQUEST ['KEYPAIRNAME'];
-    $serviceProp['SERVICEPROPERTIES'] ['VALUE'] = $_REQUEST ['KEYPAIRVALUE'];
+    $serviceProp['SERVICEPROPERTIES'] ['SERVICE'] = $_REQUEST ['SERVICE'] ?? null;
+    $serviceProp['SERVICEPROPERTIES'] ['NAME'] = $_REQUEST ['KEYPAIRNAME'] ?? null;
+    $serviceProp['SERVICEPROPERTIES'] ['VALUE'] = $_REQUEST ['KEYPAIRVALUE'] ?? null;
     if (isset($_REQUEST ['PROP'])) {
         $serviceProp['SERVICEPROPERTIES'] ['PROP'] = trim($_REQUEST ['PROP']);
     }
@@ -649,9 +649,9 @@ function getEndpointPropDataFromWeb()
 function getSerGroupPropDataFromWeb()
 {
     $serGroupProp = [];
-    $serGroupProp['SERVICEGROUPPROPERTIES'] ['SERVICEGROUP'] = $_REQUEST ['SERVICEGROUP'];
-    $serGroupProp['SERVICEGROUPPROPERTIES'] ['NAME'] = $_REQUEST ['KEYPAIRNAME'];
-    $serGroupProp['SERVICEGROUPPROPERTIES'] ['VALUE'] = $_REQUEST ['KEYPAIRVALUE'];
+    $serGroupProp['SERVICEGROUPPROPERTIES'] ['SERVICEGROUP'] = $_REQUEST ['SERVICEGROUP'] ?? null;
+    $serGroupProp['SERVICEGROUPPROPERTIES'] ['NAME'] = $_REQUEST ['KEYPAIRNAME'] ?? null;
+    $serGroupProp['SERVICEGROUPPROPERTIES'] ['VALUE'] = $_REQUEST ['KEYPAIRVALUE'] ?? null;
     if (isset($_REQUEST ['PROP'])) {
         $serGroupProp['SERVICEGROUPPROPERTIES'] ['PROP'] = $_REQUEST ['PROP'];
     }
@@ -664,17 +664,17 @@ function getSerGroupPropDataFromWeb()
 function getEndpointDataFromWeb()
 {
     $endpoint = [];
-    $endpoint['SERVICEENDPOINT'] ['SERVICE'] = $_REQUEST ['SERVICE'];
-    $endpoint['SERVICEENDPOINT'] ['NAME'] = trim($_REQUEST ['ENDPOINTNAME']);
-    $endpoint['SERVICEENDPOINT'] ['URL'] = trim($_REQUEST ['ENDPOINTURL']);
-    $endpoint['SERVICEENDPOINT'] ['INTERFACENAME'] = trim($_REQUEST ['ENDPOINTINTERFACENAME']);
+    $endpoint['SERVICEENDPOINT'] ['SERVICE'] = $_REQUEST ['SERVICE'] ?? null;
+    $endpoint['SERVICEENDPOINT'] ['NAME'] = trim($_REQUEST ['ENDPOINTNAME'] ?? '');
+    $endpoint['SERVICEENDPOINT'] ['URL'] = trim($_REQUEST ['ENDPOINTURL'] ?? '');
+    $endpoint['SERVICEENDPOINT'] ['INTERFACENAME'] = trim($_REQUEST ['ENDPOINTINTERFACENAME'] ?? '');
     if (isset($_REQUEST ['DESCRIPTION'])) {
         $endpoint['SERVICEENDPOINT'] ['DESCRIPTION'] = trim($_REQUEST ['DESCRIPTION']);
     }
     if (isset($_REQUEST ['ENDPOINTID'])) {
         $endpoint['SERVICEENDPOINT'] ['ENDPOINTID'] = trim($_REQUEST ['ENDPOINTID']);
     }
-    $endpoint['SERVICEENDPOINT']['EMAIL'] = trim($_REQUEST ['EMAIL']);
+    $endpoint['SERVICEENDPOINT']['EMAIL'] = trim($_REQUEST ['EMAIL'] ?? '');
     //The value comes from a checkbox, which wiill  not return a value when unchecked
     if (isset($_REQUEST['IS_MONITORED'])) {
         $endpoint['IS_MONITORED'] = $_REQUEST ['IS_MONITORED'];
@@ -702,8 +702,8 @@ function getDateFormat()
 function getScopeDataFromWeb()
 {
     $scopeData = [];
-    $scopeData['Name'] = trim($_REQUEST ['Name']);
-    $scopeData['Description'] = trim($_REQUEST ['Description']);
+    $scopeData['Name'] = trim($_REQUEST ['Name'] ?? '');
+    $scopeData['Description'] = trim($_REQUEST ['Description'] ?? '');
     // 'Reserved' value is a checkbox ==>> absent if not checked
     if (array_key_exists('Reserved', $_REQUEST)) {
         $scopeData['Reserved'] = ($_REQUEST ['Reserved'] == '1');
@@ -724,8 +724,8 @@ function getScopeDataFromWeb()
 function getSTDataFromWeb()
 {
     $serviceTypeData = [];
-    $serviceTypeData['Name'] = trim($_REQUEST ['Name']);
-    $serviceTypeData['Description'] = trim($_REQUEST ['Description']);
+    $serviceTypeData['Name'] = trim($_REQUEST ['Name'] ?? '');
+    $serviceTypeData['Description'] = trim($_REQUEST ['Description'] ?? '');
     if (isset($_REQUEST['AllowMonitoringException'])) {
         $serviceTypeData['AllowMonitoringException'] = ($_REQUEST ['AllowMonitoringException'] == "checked");
     } else {
@@ -747,8 +747,8 @@ function getSTDataFromWeb()
 function getAPIAuthenticationFromWeb()
 {
     $authEntityData = [];
-    $authEntityData['TYPE'] = $_REQUEST['TYPE'];
-    $authEntityData['IDENTIFIER'] = trim($_REQUEST['IDENTIFIER']);
+    $authEntityData['TYPE'] = $_REQUEST['TYPE'] ?? null;
+    $authEntityData['IDENTIFIER'] = trim($_REQUEST['IDENTIFIER'] ?? '');
     $authEntityData['ALLOW_WRITE'] = key_exists('ALLOW_WRITE', $_REQUEST) ?
                                         trim($_REQUEST['ALLOW_WRITE']) == 'checked' :
                                         false;

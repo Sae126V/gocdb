@@ -132,7 +132,7 @@ function getSEPMoveDataFromWeb() {
  */
 function submitOldSite($submitvalues) {
     //Get the old site
-    $oldSite_id = $submitvalues['OldSite'];
+    $oldSite_id = $submitvalues['OldSite'] ?? null;
     $oldSite = \Factory::getSiteService()->getSite($oldSite_id);
     //Draw the move site form
     drawMoveSite($oldSite);

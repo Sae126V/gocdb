@@ -27,21 +27,23 @@ function export() {
     require_once __DIR__.'/../../../lib/Gocdb_Services/Factory.php';
     require_once __DIR__.'/../components/Get_User_Principle.php';
     $params = array();
-    switch($_REQUEST['parent_type']){
+    $parentType = $_REQUEST['parent_type'] ?? null;
+    $parentId = $_REQUEST['id'] ?? null;
+    switch($parentType){
         case "Service" :
-            $service = \Factory::getServiceService()->getService($_REQUEST['id']);
+            $service = \Factory::getServiceService()->getService($parentId);
             $params['properties'] = $service->getServiceProperties();
             break;
         case "EndpointLocation" :
-            $endpoint = \Factory::getServiceService()->getEndpoint($_REQUEST['id']);
+            $endpoint = \Factory::getServiceService()->getEndpoint($parentId);
             $params['properties'] = $endpoint->getEndpointProperties();
             break;
         case "Site" :
-            $site = \Factory::getSiteService()->getSite($_REQUEST['id']);
+            $site = \Factory::getSiteService()->getSite($parentId);
             $params['properties'] = $site->getSiteProperties();
             break;
         case "ServiceGroup" :
-            $serviceGroup = \Factory::getServiceGroupService()->getServiceGroup($_REQUEST['id']);
+            $serviceGroup = \Factory::getServiceGroupService()->getServiceGroup($parentId);
             $params['properties'] = $serviceGroup->getServiceGroupProperties();
             break;
     }

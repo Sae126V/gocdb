@@ -47,7 +47,7 @@ function edit_service() {
  */
 function submit(\User $user = null) {
     $newValues = getSeDataFromWeb();
-    $se = \Factory::getServiceService()->getService($newValues['ID']);
+    $se = \Factory::getServiceService()->getService($newValues['ID'] ?? null);
     $se = \Factory::getServiceService()->editService($se, $newValues, $user);
     $params = array('se' => $se);
     show_view('service/service_updated.php', $params);

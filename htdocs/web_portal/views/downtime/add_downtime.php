@@ -157,7 +157,7 @@ rather than the Site entities themselves, and specify tz, offset in the DTO/JSON
                     $ngiName = $site->getNgi()->getName();
                     $label = xssafe($site."   (".$ngiName.")");
                     echo "<option value=\"{$site->getId()}\"";
-                    if ($params['userCannotPreSelect']) {
+                    if (!empty($params['userCannotPreSelect'])) {
                         echo ">";
                     } else {
                         echo " SELECTED>";

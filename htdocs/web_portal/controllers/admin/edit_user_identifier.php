@@ -128,10 +128,10 @@ function submit() {
     $serv = \Factory::getUserService();
 
     // Get the posted data
-    $userID = $_REQUEST['ID'];
-    $newIdString = $_REQUEST['idString'];
-    $identifierId = $_REQUEST['identifierId'];
-    $newAuthType = $_REQUEST['authType'];
+    $userID = $_REQUEST['ID'] ?? null;
+    $newIdString = $_REQUEST['idString'] ?? null;
+    $identifierId = $_REQUEST['identifierId'] ?? null;
+    $newAuthType = $_REQUEST['authType'] ?? null;
 
     $user = $serv->getUser($userID);
 

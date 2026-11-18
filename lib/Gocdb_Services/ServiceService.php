@@ -980,7 +980,7 @@ class ServiceService extends AbstractEntityService
         // get the parent site
         $dql = "SELECT s from Site s WHERE s.id = :id";
         /* @var $site \Site */
-        $site = $this->em->createQuery($dql)->setParameter('id', $values ['hostingSite'])->getSingleResult();
+        $site = $this->em->createQuery($dql)->setParameter('id', $values['hostingSite'] ?? null)->getSingleResult();
         // get the service type
         $servType = $this->getServiceType($values ['serviceType']);
 

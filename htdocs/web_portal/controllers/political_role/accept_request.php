@@ -35,7 +35,7 @@ function view_accept_request() {
     //Check the portal is not in read only mode, returns exception if it is and user is not an admin
     checkPortalIsNotReadOnlyOrUserIsAdmin($user);
 
-    $requestId = $_POST['id'];
+    $requestId = $_POST['id'] ?? null;
 
     if(!isset($requestId) || !is_numeric($requestId)) {
         throw new LogicException("Invalid role request id");

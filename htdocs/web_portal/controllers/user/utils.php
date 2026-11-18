@@ -29,7 +29,7 @@
 function getUserDataFromWeb() {
     $fields = array('TITLE', 'FORENAME', 'SURNAME', 'EMAIL', 'TELEPHONE');
     foreach($fields as $field) {
-        $user_data[$field] = $_REQUEST[$field];
+        $user_data[$field] = $_REQUEST[$field] ?? null;
     }
 
     if (array_key_exists("UNLINK_HOMESITE", $_REQUEST)) {

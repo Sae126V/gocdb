@@ -42,8 +42,8 @@ function delete_identifier() {
     checkPortalIsNotReadOnlyOrUserIsAdmin($currentUser);
 
     // Get the posted data
-    $userId = $_REQUEST['id'];
-    $identifierId = $_REQUEST['identifierId'];
+    $userId = $_REQUEST['id'] ?? null;
+    $identifierId = $_REQUEST['identifierId'] ?? null;
 
     $user = $serv->getUser($userId);
     $identifier = $serv->getIdentifierById($identifierId);
