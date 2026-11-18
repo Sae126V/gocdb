@@ -715,8 +715,8 @@ class User extends AbstractEntityService
         $identifierCount = count($existingIdentifiers);
 
         // Trim off any trailing and leading whitespace
-        $keyName = trim($identifierArr[0]);
-        $keyValue = trim($identifierArr[1]);
+        $keyName = is_array($identifierArr[0]) ? null : trim((string) $identifierArr[0]);
+        $keyValue = is_array($identifierArr[1]) ? null : trim((string) $identifierArr[1]);
 
         $this->addUserIdentifierValidation($keyName, $keyValue);
 
@@ -784,7 +784,7 @@ class User extends AbstractEntityService
         $this->editUserAuthorization($user, $currentUser);
 
         // Check the user identifier being added corresponds to the current certificateDn
-        $idString = trim($identifierArr[1]);
+        $idString = is_array($identifierArr[1]) ? null : trim((string) $identifierArr[1]);
         if ($idString !== $user->getCertificateDn()) {
             throw new \Exception("ID string must match the current certificateDn");
         }
@@ -881,8 +881,8 @@ class User extends AbstractEntityService
     protected function editUserIdentifierLogic(\User $user, \UserIdentifier $identifier, array $newIdentifierArr)
     {
         // Trim off trailing and leading whitespace
-        $keyName = trim($newIdentifierArr[0]);
-        $keyValue = trim($newIdentifierArr[1]);
+        $keyName = is_array($newIdentifierArr[0]) ? null : trim((string) $newIdentifierArr[0]);
+        $keyValue = is_array($newIdentifierArr[1]) ? null : trim((string) $newIdentifierArr[1]);
 
         // Validate new identifier
         $this->editUserIdentifierValidation($user, $identifier, $keyName, $keyValue);

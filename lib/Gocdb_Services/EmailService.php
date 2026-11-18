@@ -20,7 +20,7 @@ class EmailService extends AbstractEntityService {
      */
     public function send($emailAddress, $subject, $body, $headers) {
         if ($this->getConfigSendEmail()) {
-            mail($emailAddress, $subject, $body, $headers);
+            mail((string) $emailAddress, $subject, $body, $headers);
         } else {
             $this->mockMail($emailAddress, $subject, $body, $headers);
       }

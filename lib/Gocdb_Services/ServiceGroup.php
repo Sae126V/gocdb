@@ -599,8 +599,8 @@ class ServiceGroup extends AbstractEntityService{
                 /*Trim off trailing and leading whitspace - as we currently don't want this.
                 *The input array is awkwardly formatted as keys didn't use to have to be unique.
                 */
-                $key = trim($prop[0]);
-                $value = trim($prop[1]);
+                $key = is_array($prop[0]) ? null : trim((string) $prop[0]);
+                $value = is_array($prop[1]) ? null : trim((string) $prop[1]);
 
                 /**
                 *Find out if a property with the provided key already exists, if

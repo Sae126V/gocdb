@@ -190,8 +190,8 @@ class Downtime extends AbstractEntityService{
             $end = \DateTime::createFromFormat($this::FORMAT, $endStr, $UTC);
         }*/
 
-        $start = \DateTime::createFromFormat($this::FORMAT, $startStr, new \DateTimeZone("UTC"));
-        $end = \DateTime::createFromFormat($this::FORMAT, $endStr, new \DateTimeZone("UTC"));
+        $start = \DateTime::createFromFormat($this::FORMAT, (string) $startStr, new \DateTimeZone("UTC"));
+        $end = \DateTime::createFromFormat($this::FORMAT, (string) $endStr, new \DateTimeZone("UTC"));
 
         $this->validateDates($start, $end);
 
@@ -459,8 +459,8 @@ class Downtime extends AbstractEntityService{
         // Make sure all dates are treated as UTC!
         //date_default_timezone_set("UTC");
 
-        $newStart = \DateTime::createFromFormat($this::FORMAT, $newStartStr, new \DateTimeZone("UTC"));
-        $newEnd = \DateTime::createFromFormat($this::FORMAT, $newEndStr, new \DateTimeZone("UTC"));
+        $newStart = \DateTime::createFromFormat($this::FORMAT, (string) $newStartStr, new \DateTimeZone("UTC"));
+        $newEnd = \DateTime::createFromFormat($this::FORMAT, (string) $newEndStr, new \DateTimeZone("UTC"));
 
 
         // check the new start/end times of the downtime are valid according

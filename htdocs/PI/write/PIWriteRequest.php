@@ -202,7 +202,7 @@ class PIWriteRequest {
 
     #Convert the request to JSON - note depth of 2, as current, and expected,
     #use cases don't contain any nested properties
-    $requestArray = json_decode($requestContents,true,2);
+    $requestArray = json_decode((string) $requestContents,true,2);
 
     #json_decode returns null for invalid JSON and $requestContents will be empty if there was no request body
     if(is_null($requestArray) && !empty($requestContents)) {

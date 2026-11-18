@@ -74,7 +74,7 @@ class X509AuthenticationToken implements IAuthentication {
      */
     public function validate() {
         // if current DN is not the same as intial DN, if not raise hue and cry !
-        if (strcmp($this->initialDN, $this->getDN()) != 0) {
+        if (strcmp((string) $this->initialDN, (string) $this->getDN()) != 0) {
             throw new AuthenticationException(null, 'Invalid state, DN is now different');
         }
     }
