@@ -85,7 +85,7 @@ abstract class AbstractEntityService {
     * @throws \Exception
     */
     protected function checkGOCDBIsNotReadOnly(){
-        if ($this->portalIsReadOnly() and !$userIsAdmin){
+        if ($this->portalIsReadOnly()){
             throw new \Exception("GOCDB is currently in read only mode, so this action is not permitted");
         }
     }

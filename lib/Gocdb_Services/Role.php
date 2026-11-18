@@ -892,6 +892,7 @@ class Role extends AbstractEntityService
     private function mergeRolesLogic(\User $primaryUser, \User $currentUser)
     {
         $currentRoles = $currentUser->getRoles();
+        $rolesToGrant = array();
         foreach ($currentRoles as $currentRole) {
             $roleTypeName = $currentRole->getRoleType()->getName();
             $entity = $currentRole->getOwnedEntity();
