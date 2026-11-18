@@ -105,6 +105,7 @@ class ScopeQueryBuilder{
     private $scopeMatch = null;
     private $bc;
     private $tableType;
+    private $tId;
     private $em;
 
     private function setQB($qb) {

@@ -9,6 +9,9 @@ require_once __DIR__.'/AuthenticationException.php';
  */
 class BadCredentialsException extends AuthenticationException {
 
+     protected $errorDetail;
+     protected $priorException;
+
      public function __construct(\Exception $priorException=null, $errorDetail=''){
         $this->errorDetail = $errorDetail;
         $this->priorException = $priorException;
