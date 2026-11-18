@@ -295,7 +295,7 @@ class GetUser implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
              */
             $xmlUser->addChild('DESCRIPTION', "");
             $portalUrl = $this->baseUrl.'/index.php?Page_Type=User&id=' . $user->getId();
-            $portalUrl = htmlspecialchars($portalUrl);
+            $portalUrl = htmlspecialchars($portalUrl, ENT_COMPAT);
             $xmlUser->addChild('GOCDB_PORTAL_URL', $portalUrl);
             $xmlUser->addChild('EMAIL', $user->getEmail());
             $xmlUser->addChild('TEL', $user->getTelephone());

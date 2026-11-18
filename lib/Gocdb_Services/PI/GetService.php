@@ -346,7 +346,7 @@ class GetService implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $xmlSe->addAttribute("PRIMARY_KEY", $se->getId() . "G0");
             $helpers->addIfNotEmpty($xmlSe, 'PRIMARY_KEY', $se->getId() . "G0");
             $helpers->addIfNotEmpty($xmlSe, 'HOSTNAME', $se->getHostName());
-            $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Service&id=' . $se->getId());
+            $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Service&id=' . $se->getId(), ENT_COMPAT);
             $helpers->addIfNotEmpty($xmlSe, 'GOCDB_PORTAL_URL', $portalUrl);
             $helpers->addIfNotEmpty($xmlSe, 'HOSTDN', $se->getDn());
             $helpers->addIfNotEmpty($xmlSe, 'HOST_OS', $se->getOperatingSystem());

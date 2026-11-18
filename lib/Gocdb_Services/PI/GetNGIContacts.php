@@ -264,7 +264,7 @@ class GetNGIContacts implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $xmlNgi->addChild('ROCNAME', $ngi->getName());
             $xmlNgi->addChild('MAIL_CONTACT', $ngi->getEmail());
             $portalUrl = $this->baseUrl.'/index.php?Page_Type=NGI&id=' . $ngi->getId ();
-            $portalUrl = htmlspecialchars ( $portalUrl );
+            $portalUrl = htmlspecialchars ( $portalUrl, ENT_COMPAT );
             $helpers->addIfNotEmpty ( $xmlNgi, 'GOCDB_PORTAL_URL', $portalUrl );
 
             // Sort roles

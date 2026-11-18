@@ -1371,8 +1371,8 @@ class Site extends AbstractEntityService{
             $xmlSite->addAttribute('ShortName', $site->getShortName());
             $xmlSite->addAttribute('OfficialName', $site->getOfficialName());
             $sitePortalUrl = $portalUrl . '/index.php?Page_Type=Site&id=' . $site->getId();
-            $xmlSite->addAttribute('PortalURL', htmlspecialchars($sitePortalUrl));
-            $xmlSite->addAttribute('Description', htmlspecialchars($site->getDescription()));
+            $xmlSite->addAttribute('PortalURL', htmlspecialchars($sitePortalUrl, ENT_COMPAT));
+            $xmlSite->addAttribute('Description', htmlspecialchars($site->getDescription(), ENT_COMPAT));
             $xmlSite->addAttribute('Latitude', $site->getLatitude());
             $xmlSite->addAttribute('Longitude', $site->getLongitude());
                 }

@@ -341,7 +341,7 @@ class GetDowntimeToBroadcast implements IPIQuery, IPIQueryPageable, IPIQueryRend
                 $xmlDowntime->addChild("HOSTNAME", $se->getHostName());
                 $xmlDowntime->addChild("SERVICE_TYPE", $se->getServiceType()->getName());
                 $xmlDowntime->addChild("HOSTED_BY", $se->getParentSite()->getShortName());
-                $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtime->getId());
+                $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Downtime&id=' . $downtime->getId(), ENT_COMPAT);
                 $xmlDowntime->addChild('GOCDB_PORTAL_URL', $portalUrl);
                 $xmlEndpoints = $xmlDowntime->addChild ( 'AFFECTED_ENDPOINTS' );
                 if($this->renderMultipleEndpoints){
@@ -354,7 +354,7 @@ class GetDowntimeToBroadcast implements IPIQuery, IPIQueryPageable, IPIQueryRend
                         $xmlEndpoint->addChild ( 'ID', $endpoint->getId());
                         $xmlEndpoint->addChild ( 'NAME', $endpoint->getName());
                         // Extensions?
-                        $xmlEndpoint->addChild ( 'URL', htmlspecialchars($endpoint->getUrl()));
+                        $xmlEndpoint->addChild ( 'URL', htmlspecialchars($endpoint->getUrl(), ENT_COMPAT));
                         $xmlEndpoint->addChild ( 'INTERFACENAME', $endpoint->getInterfaceName());
                         if ($endpoint->getMonitored()) {
                             $mon = "Y";

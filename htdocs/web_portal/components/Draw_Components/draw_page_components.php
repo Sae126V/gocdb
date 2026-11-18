@@ -62,7 +62,7 @@ function Get_Standard_Top_Section_HTML($title = null)
     // logout button (if set - does not always need to be rendered)
     if (!empty(\Factory::$properties['LOGOUTURL'])) {
         $html .= "<div style='text-align: right;'>";
-        $html .= '<a href="' . htmlspecialchars(\Factory::$properties['LOGOUTURL']) .
+        $html .= '<a href="' . htmlspecialchars(\Factory::$properties['LOGOUTURL'], ENT_COMPAT) .
                     '"><b><font class="btn btn-danger btn-xs">Logout</font></b></a>';
         $html .= "</div>";
     }

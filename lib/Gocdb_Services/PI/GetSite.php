@@ -317,16 +317,16 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
             $xmlSite->addAttribute('NAME', $site->getShortName());
             $helpers->addIfNotEmpty($xmlSite, 'PRIMARY_KEY', $site->getPrimaryKey());
             $helpers->addIfNotEmpty($xmlSite, 'SHORT_NAME', $site->getShortName());
-            $helpers->addIfNotEmpty($xmlSite, 'OFFICIAL_NAME', htmlspecialchars($site->getOfficialName()));
-            $helpers->addIfNotEmpty($xmlSite, 'SITE_DESCRIPTION', htmlspecialchars($site->getDescription()));
+            $helpers->addIfNotEmpty($xmlSite, 'OFFICIAL_NAME', htmlspecialchars($site->getOfficialName(), ENT_COMPAT));
+            $helpers->addIfNotEmpty($xmlSite, 'SITE_DESCRIPTION', htmlspecialchars($site->getDescription(), ENT_COMPAT));
             $portalUrl = $this->portalContextUrl.'/index.php?Page_Type=Site&id=' . $site->getId();
-            $portalUrl = htmlspecialchars($portalUrl);
+            $portalUrl = htmlspecialchars($portalUrl, ENT_COMPAT);
             $helpers->addIfNotEmpty($xmlSite, 'GOCDB_PORTAL_URL', $portalUrl);
-            $helpers->addIfNotEmpty($xmlSite, 'HOME_URL', htmlspecialchars($site->getHomeUrl()));
+            $helpers->addIfNotEmpty($xmlSite, 'HOME_URL', htmlspecialchars($site->getHomeUrl(), ENT_COMPAT));
             $helpers->addIfNotEmpty($xmlSite, 'CONTACT_EMAIL', $site->getEmail());
             $helpers->addIfNotEmpty($xmlSite, 'CONTACT_TEL', $site->getTelephone());
             $helpers->addIfNotEmpty($xmlSite, 'ALARM_EMAIL', $site->getAlarmEmail());
-            $helpers->addIfNotEmpty($xmlSite, 'GIIS_URL', htmlspecialchars($site->getGiisUrl()));
+            $helpers->addIfNotEmpty($xmlSite, 'GIIS_URL', htmlspecialchars($site->getGiisUrl(), ENT_COMPAT));
             // Tier is an optional parameter
             if ($site->getTier() != null) {
                 $helpers->addIfNotEmpty($xmlSite, 'TIER', $site->getTier()->getName());
@@ -443,25 +443,25 @@ class GetSite implements IPIQuery, IPIQueryPageable, IPIQueryRenderable {
 
             $xmlSiteExtParent = $xmlSite->addChild("Extensions");
 
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Short_Name', htmlspecialchars($site->getShortName()));
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Official_Name', htmlspecialchars($site->getOfficialName()));
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Site_Description', htmlspecialchars($site->getDescription()));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Short_Name', htmlspecialchars($site->getShortName(), ENT_COMPAT));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Official_Name', htmlspecialchars($site->getOfficialName(), ENT_COMPAT));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Site_Description', htmlspecialchars($site->getDescription(), ENT_COMPAT));
 
             $sID = $site->getId();
             if ($sID != "") {
-                $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Site&id=' . $sID);
+                $portalUrl = htmlspecialchars($this->portalContextUrl.'/index.php?Page_Type=Site&id=' . $sID, ENT_COMPAT);
                 $xmlSiteExt = $xmlSiteExtParent->addChild("Extension");
                 $xmlSiteExt->addChild("LocalID", "GOCDB_Portal_URL");
                 $xmlSiteExt->addChild("Key", "GOCDB_Portal_URL");
-                $safeUrl = htmlspecialchars($portalUrl);
+                $safeUrl = htmlspecialchars($portalUrl, ENT_COMPAT);
                 $xmlSiteExt->addChild("Value", $safeUrl);
             }
 
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Home_URL', htmlspecialchars($site->getHomeUrl()));
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Contact_Email', htmlspecialchars($site->getEmail()));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Home_URL', htmlspecialchars($site->getHomeUrl(), ENT_COMPAT));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Contact_Email', htmlspecialchars($site->getEmail(), ENT_COMPAT));
             $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Contact_Tel', $site->getTelephone());
             $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'Alarm_Email', $site->getAlarmEmail());
-            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'GIIS_URL', htmlspecialchars($site->getGiisUrl()));
+            $helpers->addExtIfNotEmpty($xmlSiteExtParent, 'GIIS_URL', htmlspecialchars($site->getGiisUrl(), ENT_COMPAT));
 
 
             if ($site->getTier() != null) {

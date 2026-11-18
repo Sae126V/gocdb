@@ -281,12 +281,12 @@ class GetServiceGroupRole implements IPIQuery, IPIQueryPageable, IPIQueryRendera
             $xmlSg->addAttribute ( "ID", $sg->getId ());
             $xmlSg->addAttribute ( "PRIMARY_KEY", $sg->getId () . "G0" );
             $xmlSg->addChild ( 'NAME', $sg->getName () );
-            $xmlSg->addChild ( 'DESCRIPTION', htmlspecialchars ( $sg->getDescription () ) );
+            $xmlSg->addChild ( 'DESCRIPTION', htmlspecialchars ( $sg->getDescription (), ENT_COMPAT ) );
             $mon = ($sg->getMonitored ()) ? 'Y' : 'N';
             $xmlSg->addChild ( 'MONITORED', $mon );
             $xmlSg->addChild ( 'CONTACT_EMAIL', $sg->getEmail () );
             $url = $this->baseUrl.'/index.php?Page_Type=Service_Group&id=' . $sg->getId ();
-            $url = htmlspecialchars ( $url );
+            $url = htmlspecialchars ( $url, ENT_COMPAT );
             $xmlSg->addChild ( 'GOCDB_PORTAL_URL', $url );
 
             // Sort roles
@@ -307,7 +307,7 @@ class GetServiceGroupRole implements IPIQuery, IPIQueryPageable, IPIQueryRendera
                 }
 
                 $url = $this->baseUrl.'/index.php?Page_Type=User&id=' . $user->getId ();
-                $url = htmlspecialchars ( $url );
+                $url = htmlspecialchars ( $url, ENT_COMPAT );
                 $xmlUser->addChild ( 'GOCDB_PORTAL_URL', $url );
                 $xmlUser->addChild ( 'ROLE', $role->getRoleType ()->getName () );
             }
