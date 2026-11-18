@@ -49,8 +49,8 @@ function edit_property() {
  */
 function draw(\User $user = null) {
     $serv = \Factory::getSiteService();
-    $site = $serv->getSite($_REQUEST['id']);
-    $property = $serv->getProperty($_REQUEST['propertyid']);
+    $site = $serv->getSite(isset($_REQUEST['id']) ? $_REQUEST['id'] : null);
+    $property = $serv->getProperty(isset($_REQUEST['propertyid']) ? $_REQUEST['propertyid'] : null);
     $serv->validatePropertyActions($user, $site);
 
     $params['prop'] = $property;

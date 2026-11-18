@@ -84,10 +84,10 @@ function draw(\User $user = null) {
 function submit(\User $user = null) {
 
     //Check if this is a confirmed submit or intial submit
-    $confirmed = $_POST['CONFIRMED'];
+    $confirmed = isset($_POST['CONFIRMED']) ? $_POST['CONFIRMED'] : '';
     if($confirmed == true){
         //Downtime is confirmed, submit it
-        $downtimeInfo = json_decode($_POST['newValues'], TRUE);
+        $downtimeInfo = json_decode(isset($_POST['newValues']) ? $_POST['newValues'] : '', TRUE);
 
         $serv = \Factory::getDowntimeService();
         $dt = $serv->getDowntime($downtimeInfo['DOWNTIME']['EXISTINGID']);

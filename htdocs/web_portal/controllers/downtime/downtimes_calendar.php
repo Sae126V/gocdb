@@ -139,7 +139,7 @@ function getTooltip()
     if (isset($_GET['downtimeID'])) {
         $downtime = \Factory::getDowntimeService()->getDowntime($_GET['downtimeID']);
     } else {
-        throw new \Exception("downtime" . $_GET['downtimeID'] . "does not exist.");
+        throw new \Exception("downtime" . (isset($_GET['downtimeID']) ? $_GET['downtimeID'] : '') . "does not exist.");
     }
 
     //initialise the parameter array to be passed through to the view
@@ -236,7 +236,7 @@ function view()
 
     $selectedServiceTypes = array();
     if (!empty($_GET['serviceType'])) {
-        $selectedServiceTypes = explode(',', $_GET['service_type']);
+        $selectedServiceTypes = explode(',', isset($_GET['service_type']) ? $_GET['service_type'] : '');
     }
 
     $selectedNGIs = array();

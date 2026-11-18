@@ -49,7 +49,8 @@ function view_user()
     $authEntSites = array();
     /** @var \APIAuthentication $apiAuth */
     foreach ($apiAuthEnts as $apiAuth) {
-        $authEntSites[$apiAuth->getParentSite()->getId()]++;
+        $siteId = $apiAuth->getParentSite()->getId();
+        $authEntSites[$siteId] = isset($authEntSites[$siteId]) ? $authEntSites[$siteId] + 1 : 1;
     }
 
     /** @var \User $callingUser */

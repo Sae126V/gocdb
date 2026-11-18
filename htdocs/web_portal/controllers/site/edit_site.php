@@ -112,7 +112,7 @@ function submit(\User $user = null) {
         //print_r($_POST);
         $newValues = getSiteDataFromWeb();
         //print_r($newValues);
-        $siteId = \Factory::getSiteService()->getSite($newValues['ID']);
+        $siteId = \Factory::getSiteService()->getSite(isset($newValues['ID']) ? $newValues['ID'] : null);
         $site = \Factory::getSiteService()->editSite($siteId, $newValues, $user);
         $params = array('site' => $site);
         show_view('site/site_updated.php', $params);

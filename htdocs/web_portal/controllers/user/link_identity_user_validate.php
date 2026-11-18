@@ -15,7 +15,7 @@ function validate_identity_link() {
     if (!isset($_REQUEST['c'])) {
         show_view('error.php', "A confirmation code must be specified.");
     }
-    $code = $_REQUEST['c'];
+    $code = isset($_REQUEST['c']) ? $_REQUEST['c'] : null;
 
     $currentIdString = Get_User_Principle();
     if (empty($currentIdString)) {

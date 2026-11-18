@@ -29,7 +29,7 @@ function view_deny_request() {
     if($user == null) {
         throw new Exception("Unregistered users can't view/deny role requests");
     }
-    $requestId = $_POST['id'];
+    $requestId = isset($_POST['id']) ? $_POST['id'] : null;
 
     //Check the portal is not in read only mode, returns exception if it is and user is not an admin
     checkPortalIsNotReadOnlyOrUserIsAdmin($user);

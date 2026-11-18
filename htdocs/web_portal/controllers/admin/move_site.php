@@ -129,7 +129,7 @@ function getSiteMoveDataFromWeb() {
  */
 function submitOldNgi($submitvalues) {
     //Get the NGI
-    $oldNgi_id = $submitvalues['OldNGI'];
+    $oldNgi_id = isset($submitvalues['OldNGI']) ? $submitvalues['OldNGI'] : null;
     $oldNgi = \Factory::getNgiService()->getNGI($oldNgi_id);
     //Draw the move site form
     drawMoveSite($oldNgi);

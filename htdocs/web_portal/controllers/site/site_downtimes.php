@@ -3,7 +3,7 @@ function site_downtimes() {
     require_once __DIR__.'/../../../../lib/Gocdb_Services/Factory.php';
 
     $serv = \Factory::getSiteService();
-    $site = $serv->getSite($_REQUEST['id']);
+    $site = $serv->getSite(isset($_REQUEST['id']) ? $_REQUEST['id'] : null);
     $downtimes = $serv->getDowntimes($_REQUEST['id'], null);
 
     $params['site'] = $site;

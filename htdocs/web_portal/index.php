@@ -202,7 +202,7 @@ function Draw_Page($Page_Type) {
             break;
         case "Error_Redirect":
             //rejectIfNotAuthenticated();
-            show_view('error.php', $_REQUEST['error']);
+            show_view('error.php', isset($_REQUEST['error']) ? $_REQUEST['error'] : null);
             break;
         case "Static_HTML":
             //rejectIfNotAuthenticated();

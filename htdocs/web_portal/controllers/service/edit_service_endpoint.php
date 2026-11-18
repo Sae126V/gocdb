@@ -78,7 +78,7 @@ function draw(\User $user = null) {
 function submit(\User $user = null) {
     try {
         $newValues = getEndpointDataFromWeb();
-        $endpointID = $newValues['SERVICEENDPOINT']['ENDPOINTID'];
+        $endpointID = isset($newValues['SERVICEENDPOINT']['ENDPOINTID']) ? $newValues['SERVICEENDPOINT']['ENDPOINTID'] : null;
 
         $serv = \Factory::getServiceService();
         $endpoint = $serv->getEndpoint($endpointID);
