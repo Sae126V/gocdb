@@ -216,6 +216,14 @@ class PIWriteRequest {
       return;
     }
 
+    #The request body must be a JSON object. A bare value such as "abc" or true
+    #is rejected here; PHP 8 would otherwise fail on it further down.
+    if (!is_array($requestArray)) {
+      $this->exceptionWithResponseCode(400,
+        "The JSON message must be an object. " . $genericError
+      );
+    }
+
     /* The default case is that a single value (or nothing at all) is specified.
      * But, we first deal with cases where we expect multiple key/value pairs.
      * Single values are stored in $this->entityPropertyValue whilst miultiple
